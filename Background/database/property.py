@@ -1,5 +1,7 @@
 from .db import Base,session
 from sqlalchemy import String,Integer,TIMESTAMP,DECIMAL,Column
+from sqlalchemy import Column,Integer,String,TIMESTAMP,ForeignKey
+from sqlalchemy import String,Integer,TIMESTAMP,DECIMAL
 
 class User(Base):
     pass
@@ -13,8 +15,7 @@ class Cancellings(Base):
     area = Column(Integer)
     explain = Column(String)
     rid = Column(Integer)
-from sqlalchemy import Column,Integer,String,TIMESTAMP,ForeignKey
-from sqlalchemy import String,Integer,TIMESTAMP,DECIMAL
+
 
 class Admins(Base):
 
