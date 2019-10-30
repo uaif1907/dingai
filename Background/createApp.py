@@ -21,7 +21,6 @@ def getApp():
     # 注册接口
     api.add_resource(User,"/api/user/<int:cid>/<int:did>",endpoint="user")
     api.add_resource(Cancelling,"/api/cancelling/<int:aid>/<int:area>/<int:rid>",endpoint="cancelling")
-
     api.add_resource(Admin, "/api/admin", endpoint="admin")
     api.add_resource(Company, "/api/company", endpoint="company")
     api.add_resource(Department, "/api/department", endpoint="department")
