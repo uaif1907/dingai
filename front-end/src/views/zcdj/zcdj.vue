@@ -133,7 +133,7 @@
                             </el-col>
                             <el-col :span="8">
                                 <el-form-item label="使用公司">
-                                    <el-select v-model="addRegisterData.company" placeholder="使用公司">
+                                    <el-select v-model="addRegisterData.CompanyApi" placeholder="使用公司">
                                         <el-option value="优逸客">优逸客</el-option>
                                         <el-option value="合情合理">合情合理</el-option>
                                         <el-option value="有理有据">有理有据</el-option>
@@ -142,7 +142,7 @@
                             </el-col>
                             <el-col :span="8">
                                 <el-form-item label="使用部门">
-                                    <el-select v-model="addRegisterData.department" placeholder="使用部门">
+                                    <el-select v-model="addRegisterData.DepartmentApi" placeholder="使用部门">
                                         <el-option value="优逸客">优逸客</el-option>
                                         <el-option value="合情合理">合情合理</el-option>
                                         <el-option value="有理有据">有理有据</el-option>
@@ -308,7 +308,7 @@
                             </el-col>
                             <el-col :span="8">
                                 <el-form-item label="使用公司">
-                                    <el-select v-model="editRegisterData.company" placeholder="使用公司">
+                                    <el-select v-model="editRegisterData.CompanyApi" placeholder="使用公司">
                                         <el-option value="优逸客">优逸客</el-option>
                                         <el-option value="合情合理">合情合理</el-option>
                                         <el-option value="有理有据">有理有据</el-option>
@@ -317,7 +317,7 @@
                             </el-col>
                             <el-col :span="8">
                                 <el-form-item label="使用部门">
-                                    <el-select v-model="editRegisterData.department" placeholder="使用部门">
+                                    <el-select v-model="editRegisterData.DepartmentApi" placeholder="使用部门">
                                         <el-option value="优逸客">优逸客</el-option>
                                         <el-option value="合情合理">合情合理</el-option>
                                         <el-option value="有理有据">有理有据</el-option>
@@ -483,12 +483,12 @@
                             </el-col>
                             <el-col :span="8">
                                 <el-form-item label="使用公司">
-                                    <el-input v-model="showRegisterData.company" disabled></el-input>
+                                    <el-input v-model="showRegisterData.CompanyApi" disabled></el-input>
                                 </el-form-item>
                             </el-col>
                             <el-col :span="8">
                                 <el-form-item label="使用部门">
-                                    <el-input v-model="showRegisterData.department" disabled></el-input>
+                                    <el-input v-model="showRegisterData.DepartmentApi" disabled></el-input>
                                 </el-form-item>
                             </el-col>
                             <el-col :span="8">
