@@ -1,6 +1,6 @@
 from flask_restful import Resource,fields,marshal,reqparse
-# from .database.db import session
-# from .database.property import Admins
+from database.db import session
+from database.property import Admins
 admins_fields={
     'id':fields.Integer,
     'username':fields.String,
@@ -13,6 +13,6 @@ class Admin(Resource):
 
         :return: 管理员
         """
-        # data= session.query(Admins).all()
+        data= session.query(Admins).all()
 
-        return {"code":200,"msg":"ok"}
+        return {"code":200,"msg":data}
