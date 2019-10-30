@@ -1,5 +1,6 @@
 from flask_restful import Resource,fields,marshal,reqparse
-# from Background.database.db import session
+from Background.database.db import session
+from Background.database.property import Users
 user_fields={
     'uid':fields.Integer,
     'num':fields.Integer,
@@ -17,6 +18,7 @@ class User(Resource):
         :param did: 部门id
         :return:  返回此部门下所有的用户
         """
-        # data= session.query(User).all()
+        data= session.query(Users).all()
+        print(data)
 
         return {"code":200,"msg":"ok"}

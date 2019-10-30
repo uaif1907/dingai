@@ -3,19 +3,6 @@ from sqlalchemy import String,Integer,TIMESTAMP,DECIMAL,Column
 from sqlalchemy import Column,Integer,String,TIMESTAMP,ForeignKey
 from sqlalchemy import String,Integer,TIMESTAMP,DECIMAL
 
-class User(Base):
-    pass
-
-# 退库
-class Cancellings(Base):
-    __tablename__ = "cancelling"
-    id = Column(Integer,primary_key=True)
-    aid = Column(Integer)
-    time = Column(TIMESTAMP)
-    area = Column(Integer)
-    explain = Column(String)
-    rid = Column(Integer)
-
 
 class Admins(Base):
     __tablename__='admin'
@@ -35,7 +22,7 @@ class Departments(Base):
     cid = Column(Integer)
 
 class Users(Base):
-    _tablename__='user'
+    __tablename__ ='user'
     uid = Column(Integer,primary_key=True)
     num = Column(String)
     name = Column(String)
@@ -45,8 +32,7 @@ class Users(Base):
     tel = Column(Integer)
 
 class Propertys(Base):
-<<<<<<< HEAD
-    _tablename__ = 'property'
+    __tablename__ = 'property'
     id = Column(Integer, primary_key=True)
     status = Column(Integer)
     bar_codes = Column(String)
@@ -59,6 +45,3 @@ class Propertys(Base):
     did = Column(Integer)
     email = Column(String)
     tel = Column(Integer)
-=======
-    pass
->>>>>>> b1f162df059decd86c118ba1fce12b0b952a2165
