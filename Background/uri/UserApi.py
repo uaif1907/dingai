@@ -1,5 +1,14 @@
-from flask_restful import Resource
-
+from flask_restful import Resource,fields,marshal,reqparse
+# from Background.database.db import session
+user_fields={
+    'uid':fields.Integer,
+    'num':fields.Integer,
+    'name':fields.String,
+    'cid':fields.Integer,
+    'did':fields.Integer,
+    'email':fields.String,
+    'tel':fields.Integer
+}
 class User(Resource):
     def get(self,cid,did):
         """
@@ -8,4 +17,6 @@ class User(Resource):
         :param did: 部门id
         :return:  返回此部门下所有的用户
         """
-        return {"code":200,"msg":'ok'}
+        # data= session.query(User).all()
+
+        return {"code":200,"msg":"ok"}
