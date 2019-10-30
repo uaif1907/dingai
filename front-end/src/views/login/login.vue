@@ -74,6 +74,11 @@ export default {
           }
         });
     }
+  },
+  mounted() {
+    this.$axios.get("/api/user/1/1").then(function(res){
+      console.log(res.data)
+    })
   }
 }
 </script>
