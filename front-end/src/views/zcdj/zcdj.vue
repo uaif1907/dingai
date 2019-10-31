@@ -55,11 +55,11 @@
                         <el-table-column prop="sn" label="产品序列" width="100"> </el-table-column>
                         <el-table-column align="center" prop="unit" label="计量单位" width="80"> </el-table-column>
                         <el-table-column prop="price" label="金额" width="100"></el-table-column>
-                        <el-table-column prop="cid" label="使用公司" width="100"> </el-table-column>
-                        <el-table-column prop="did" label="使用部门" width="100"> </el-table-column>
+                        <el-table-column prop="companyname" label="使用公司" width="100"> </el-table-column>
+                        <el-table-column prop="depname" label="使用部门" width="100"> </el-table-column>
                         <el-table-column prop="time" label="购买时间" width="120"></el-table-column>
-                        <el-table-column prop="uid" label="使用人" width="100"> </el-table-column>
-                        <el-table-column prop="aid" label="管理员" width="100"> </el-table-column>
+                        <el-table-column prop="userperson" label="使用人" width="100"> </el-table-column>
+                        <el-table-column prop="username" label="管理员" width="100"> </el-table-column>
                         <el-table-column prop="area" label="存放地点" width="100"> </el-table-column>
                         <el-table-column prop="deadline" label="使用期限" width="120"> </el-table-column>
                         <el-table-column prop="source" label="来源" width="80"> </el-table-column>
@@ -600,9 +600,11 @@
                 showRegisterData:{},
                 activeName: 'second',
                 input:'',
-                tableData:[
 
-                ],
+                tableData:[],
+
+
+
                 currentPage2: 1,
             };
         },

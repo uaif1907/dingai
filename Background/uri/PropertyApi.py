@@ -1,6 +1,7 @@
 from flask_restful import Resource,fields,marshal
 from Background.database.db import session
 from Background.database.property import Propertys
+from Background.database.Admin import Admins
 propertys_fields = {
     'id':fields.Integer,
     'status':fields.Integer,
@@ -26,17 +27,26 @@ propertys_fields = {
     'cid':fields.Integer,
     'uid':fields.Integer,
     'did':fields.Integer,
-    'username':fields.String
+    'username':fields.String,
+    'userperson':fields.String,
+    'companyname':fields.String,
+    'depname':fields.String,
 }
 class Property(Resource):
     def get(self):
         """
         获取资产登记
         :return:返回全部资产登记
-
         """
+
         data = session.query(Propertys).all()
         for item in data:
+
             item.username=item.admin.username
+            item.userperson=item.user.name
+            item.companyname=item.company.name
+            item.depname = item.department.name
         arr = [(marshal(item,propertys_fields)) for item in data]
         return {"code":200,"data":arr}
+
+
