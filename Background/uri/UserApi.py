@@ -1,6 +1,9 @@
 from flask_restful import Resource,fields,marshal,reqparse
 from Background.database.db import session
 from Background.database.User import Users
+
+
+
 user_fields={
     'uid':fields.Integer,
     'num':fields.Integer,
@@ -20,5 +23,5 @@ class User(Resource):
         """
         data= session.query(Users).all()
         arr = [(marshal(item,user_fields)) for item in data]
-
+        print(data)
         return {"code":200,"data":arr}

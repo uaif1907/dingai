@@ -604,7 +604,7 @@
                 currentPage2: 1,
             };
         },
-        
+
         methods:{
             // getdata:function(){
             //     let url = "http://127.0.0.1:5000/api/property"

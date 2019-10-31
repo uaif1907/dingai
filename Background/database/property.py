@@ -3,7 +3,6 @@ from sqlalchemy import String,Integer,TIMESTAMP,DECIMAL,Column,DateTime
 from sqlalchemy import Column,Integer,String,TIMESTAMP,ForeignKey
 from sqlalchemy import String,Integer,TIMESTAMP,DECIMAL
 
-
 class Propertys(Base):
     __tablename__ = 'property'
     id = Column(Integer, primary_key=True)
@@ -30,4 +29,6 @@ class Propertys(Base):
     cid = Column(Integer)
     uid = Column(Integer)
     did = Column(Integer)
+    email = Column(String)
+
 
