@@ -577,6 +577,7 @@
 </template>
 
 <script>
+    import axios from 'axios'
     import Status from'@/components/data/status.vue'
     export default {
         name: 'Zcdj',
@@ -631,9 +632,40 @@
             };
         },
         mounted(){
-            // this.$axios.get()
+            this.$axios.get("/api/property").then((res)=>{
+                console.log(res.data)
+                // this.tableData = res.data
+            })
         },
         methods:{
+            // getdata:function(){
+            //     let url = "http://127.0.0.1:5000/api/property"
+            //     let that = this
+            //     axios.get(url).then(function (result) {
+            //         console.log(result.data.data)
+            //         that.tableData = result.data.data
+            //     })
+            // },
+            // post:function(url,data){
+            //     return new Promise(function (resolve,reiect) {
+            //         $.ajax({
+            //             type:"POST",
+            //             url:'url',
+            //             data:{'action':'el-form-item','id':data},
+            //             success:function () {
+            //                 resolve(res)
+            //             }
+            //         })
+            //     })
+            // },
+            // created(){
+            //   let _this=this
+            //   this.post('http://127.0.0.1:5000/api/property').then(function (res) {
+            //       let datas=$.parseJSON(res)
+            //       console.log(datas.data)
+            //       _this.list=datas.data
+            //   })
+            // },
             handleClick(){
 
             },
