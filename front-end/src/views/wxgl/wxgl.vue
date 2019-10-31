@@ -13,7 +13,7 @@
                 <el-col :span="12">
                     <el-button type="primary" size="small" icon="el-icon-plus" @click="addCollarDialogVisible = true">新增</el-button>
                     <el-button size="small" icon="el-icon-printer" >打印</el-button>
-                    <el-button size="small" icon="el-icon-upload2">导出</el-button>
+                    <el-button size="small" icon="el-icon-upload2" @click="date">导出</el-button>
                 </el-col>
                 <!--日历-->
                 <el-col :span="12">
@@ -41,8 +41,9 @@
                 <el-table-column prop="prop" label="资产" > </el-table-column>
                 <el-table-column prop="time1" label="报修时间"></el-table-column>
                 <el-table-column prop="name" label="报修人"> </el-table-column>
-                <el-table-column prop="people" label="维修人"> </el-table-column>
                 <el-table-column prop="explain" label="报修说明" v-model="data1"> </el-table-column>
+                <el-table-column prop="time2" label="维修时间"></el-table-column>
+                <el-table-column prop="people" label="维修人"> </el-table-column>
                 <el-table-column prop="explain2" label="维修说明" > </el-table-column>
                 <el-table-column prop="price" label="维修花费" width="180"></el-table-column>
                 <el-table-column fixed="right" label="操作" width="100">
@@ -78,7 +79,7 @@
                 <el-form ref="form" :model="addCollarForm" label-width="80px">
                     <el-row>
                         <el-col :span="8">
-                            <el-form-item label="维修单号" size="small"style="margin-left: -30px">
+                            <el-form-item label="维修单号" size="small" style="margin-left: -30px">
                                 <el-input v-model="addCollarForm.handle_name" placeholder="单号" disabled></el-input>
                             </el-form-item>
                         </el-col>
@@ -156,15 +157,14 @@
                     <el-row>
                         <el-col :span="8">
                             <el-form-item label="维修单号" size="small" style="margin-left: -30px">
-                                <el-input v-model="showRegisterData.collar_number" placeholder="单号" disabled></el-input>
+                                <el-input v-model="showRegisterData.pid" placeholder="单号" disabled></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="8">
                             <el-form-item label="报修时间" size="small">
                                 <el-date-picker
-                                        v-model="showRegisterData.collar_times"
+                                        v-model="showRegisterData.time1"
                                         type="date"
-                                        value-format="timestamp"
                                         style="width:100%;"
                                         placeholder="选择报修日期"
                                 disabled>
@@ -173,7 +173,7 @@
                         </el-col>
                         <el-col :span="8">
                             <el-form-item label="报修人" size="small">
-                                <el-input v-model="showRegisterData.company_name" disabled></el-input>
+                                <el-input v-model="showRegisterData.name" disabled></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="8">
@@ -183,15 +183,14 @@
                         </el-col>
                         <el-col :span="8">
                             <el-form-item label="维修人" size="small">
-                                <el-input v-model="showRegisterData.service" disabled></el-input>
+                                <el-input v-model="showRegisterData.people" disabled></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="8">
                             <el-form-item label="维修时间" size="small">
                                 <el-date-picker
-                                        v-model="showRegisterData.collar_times"
+                                        v-model="showRegisterData.time2"
                                         type="date"
-                                        value-format="timestamp"
                                         style="width:100%;"
                                         placeholder="选择报修日期"
                                 disabled>
@@ -200,12 +199,12 @@
                         </el-col>
                         <el-col :span="24">
                             <el-form-item label="报修说明" size="small" style="margin-left: -30px">
-                                <el-input type="textarea" v-model="showRegisterData.Repair_remarks" placeholder="报修说明" disabled></el-input>
+                                <el-input type="textarea" v-model="showRegisterData.explain2" placeholder="报修说明" disabled></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="24">
                             <el-form-item label="维修说明" size="small" style="margin-left: -30px">
-                                <el-input type="textarea" v-model="showRegisterData.servic_remarks" placeholder="报修说明" disabled></el-input>
+                                <el-input type="textarea" v-model="showRegisterData.explain" placeholder="维修说明" disabled></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
@@ -342,7 +341,9 @@
             });
 
             },
-
+            date(){
+                console.log(this.sizeForm.data)
+            },
             deleteRow(index, rows) {
                 rows.splice(index, 1);
             },
@@ -380,6 +381,7 @@
             showRegister(row){
                 this.showDialogTableVisible = true;
                 this.showRegisterData = row;
+                console.log('点击行数',row)
             },
             editRegisterDone(){
                 this.editDialogTableVisible = false;
@@ -431,93 +433,9 @@
                 selectCollarAssetsData:[],
                 currentPage2: 1,
                 sizeForm: {
-                    data:[]
+                    data:''
                 },
                 tableData: [
-                    // {
-                    //     id:1,
-                    //     collar_number:this.data1,
-                    //     collar_time:'2018-06-18',
-                    //     expend:'$98.00',
-                    //     service:'里斯',
-                    //     company_name:'张三',
-                    //     status_name:'已取消',
-                    //     Repair_remarks:'废了',
-                    //     servic_remarks:'换个新的XIM Alpha',
-                    //     collar_times:'1529254718034',
-                    //     times:Date.now(),
-                    //     status:9
-                    // },
-                    // {
-                    //     id:2,
-                    //     collar_number:'WB20180608001',
-                    //     collar_time:'2018-06-18',
-                    //     expend:'$98.00',
-                    //     service:'里斯',
-                    //     company_name:'张三',
-                    //     status_name:'已取消',
-                    //     Repair_remarks:'废了',
-                    //     servic_remarks:'换个新的XIM Alpha',
-                    //     collar_times:'1529254718034',
-                    //     times:Date.now(),
-                    //     status:10
-                    // },
-                    // {
-                    //     id:3,
-                    //     collar_number:'WB20180608001',
-                    //     collar_time:'2018-06-18',
-                    //     expend:'$98.00',
-                    //     service:'里斯',
-                    //     company_name:'张三',
-                    //     status_name:'已取消',
-                    //     Repair_remarks:'废了',
-                    //     servic_remarks:'换个新的XIM Alpha',
-                    //     collar_times:'1529254718034',
-                    //     times:Date.now(),
-                    //     status:11
-                    // },
-                    // {
-                    //     id:4,
-                    //     collar_number:'WB20180608001',
-                    //     collar_time:'2018-06-18',
-                    //     expend:'$98.00',
-                    //     service:'里斯',
-                    //     company_name:'张三',
-                    //     status_name:'已取消',
-                    //     Repair_remarks:'废了',
-                    //     servic_remarks:'换个新的XIM Alpha',
-                    //     collar_times:'1529254718034',
-                    //     times:Date.now(),
-                    //     status:12
-                    // },
-                    // {
-                    //     id:5,
-                    //     collar_number:'WB20180608001',
-                    //     collar_time:'2018-06-18',
-                    //     expend:'$98.00',
-                    //     service:'里斯',
-                    //     company_name:'张三',
-                    //     status_name:'已取消',
-                    //     Repair_remarks:'废了',
-                    //     servic_remarks:'换个新的XIM Alpha',
-                    //     collar_times:'1529254718034',
-                    //     times:Date.now(),
-                    //     status:13
-                    // },
-                    // {
-                    //     id:6,
-                    //     collar_number:'WB20180608001',
-                    //     collar_time:'2018-06-18',
-                    //     expend:'$98.00',
-                    //     service:'里斯',
-                    //     company_name:'张三',
-                    //     status_name:'已取消',
-                    //     Repair_remarks:'废了',
-                    //     servic_remarks:'换个新的XIM Alpha',
-                    //     collar_times:'1529254718034',
-                    //     times:Date.now(),
-                    //     status:14
-                    // },
 
                 ],
 
@@ -530,18 +448,7 @@
             Selectedassets
         },
 
-        // mounted() {
-        // this.$axios.get("/api/maintain/1").then(function(res){
-        //   console.log(res.data);
-        //
-        // }
-        //     this.find();
-        //     console.log(741)
 
-    // }
-        // this.$axios.get("/api/user/1/1").then(function(res){
-        //   console.log(res.data)
-        // })
 
     }
 </script>

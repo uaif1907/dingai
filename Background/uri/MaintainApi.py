@@ -5,6 +5,7 @@ from Background.database.maintain import Main
 from Background.database.property import Propertys
 from Background.database.User import Users
 
+
 class Maintain(Resource):
     def get(self,uid):
         lis = []
@@ -35,12 +36,19 @@ class Maintain(Resource):
         for item in data:
             val1.append(dic)
             time1 = item.__dict__['time1']
-            # print(item.__dict__['time1'])
+            timeStamp = 1381419600
+            dateArray1 = time1.utcfromtimestamp(timeStamp)
+            showTime1 = dateArray1.strftime("%Y-%m-%d") #报修时间
+
+            print(showTime1)
             time2 = item.__dict__['time2']
+            dateArray2 = time2.utcfromtimestamp(timeStamp)
+            showTime2 = dateArray2.strftime("%Y-%m-%d") #维修时间
+
             price = item.__dict__['price']
-            item.__dict__['time2']=str(time2)
-            item.__dict__['time1']=str(time1)
-            item.__dict__['price']=str(price)
+            item.__dict__['time2']=showTime2
+            item.__dict__['time1']=showTime1
+            item.__dict__['price']=str(price)+'￥'
             i = 0
             for ite in item.__dict__:
                 if(i>0):

@@ -12,43 +12,30 @@
                         <el-button @click="handleSelectPerson(scope.row)" type="text" >选择</el-button>
                     </template>
                 </el-table-column>
-                <el-table-column prop="personnel_number" label="员工工号" width="100"> </el-table-column>
-                <el-table-column prop="personnel_name" label="员工姓名" width="100"> </el-table-column>
-                <el-table-column prop="company_name" label="所属公司" width="150"></el-table-column>
-                <el-table-column prop="department_name" label="所属部门" width="100"> </el-table-column>
+                <el-table-column prop="num" label="员工工号" width="100"> </el-table-column>
+                <el-table-column prop="name" label="员工姓名" width="100"> </el-table-column>
+                <el-table-column prop="company" label="所属公司" width="150"></el-table-column>
+                <el-table-column prop="department" label="所属部门" width="100"> </el-table-column>
                 <el-table-column prop="email" label="邮箱" width="160"> </el-table-column>
-                <el-table-column prop="phone" label="手机" width="140"> </el-table-column>
+                <el-table-column prop="tel" label="手机" width="140"> </el-table-column>
             </el-table>
         </el-col>
     </el-row>
 </template>
 <script>
     export default {
+        mounted(){
+             this.$axios.get("/api/option").then(res=>{
+
+            let data1 = res.data.data;
+            this.persons=data1
+            console.log(data1,typeof(data1));
+            })
+        },
         data(){
             return {
                 persons:[
-                    {
-                        personnel_id:1,
-                        personnel_number:1001,
-                        personnel_name:"张三",
-                        company_id:1,
-                        company_name:"康佳",
-                        dep_id:1,
-                        department_name:"研发部",
-                        email:"zhangsan@qq.com",
-                        phone:13800002222
-                    },
-                    {
-                        personnel_id:2,
-                        personnel_number:1002,
-                        personnel_name:"李四",
-                        company_id:1,
-                        company_name:"康佳",
-                        dep_id:2,
-                        department_name:"人事部",
-                        email:"lisi@qq.com",
-                        phone:13800002233
-                    }
+
                 ],
                 data:[{
                     label: '康佳',

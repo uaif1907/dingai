@@ -11,6 +11,7 @@ from .uri.CompanyApi import Company
 from .uri.DepartmentApi import Department
 from .uri.PropertyApi import Property
 from .uri.MaintainApi import Maintain
+from .uri.OptionApi import Option
 def getApp():
     # 创建应用
     app = Flask(__name__)
@@ -19,6 +20,7 @@ def getApp():
     api = Api(app)
 
     # 注册接口
+    api.add_resource(Option,"/api/option", endpoint="Option")
     api.add_resource(User,"/api/user/<int:cid>/<int:did>",endpoint="user")
     api.add_resource(Cancelling,"/api/cancelling/<int:aid>/<int:area>/<int:rid>",endpoint="cancelling")
     api.add_resource(Admin, "/api/admin", endpoint="admin")
@@ -27,4 +29,5 @@ def getApp():
     api.add_resource(Property, "/api/property", endpoint="property")
 
     api.add_resource(Maintain, "/api/maintain/<int:uid>", endpoint="maintain")
+
     return app
