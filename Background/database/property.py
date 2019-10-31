@@ -1,64 +1,33 @@
 from .db import Base,session
-from sqlalchemy import String,Integer,TIMESTAMP,DECIMAL,Column
+from sqlalchemy import String,Integer,TIMESTAMP,DECIMAL,Column,DateTime
 from sqlalchemy import Column,Integer,String,TIMESTAMP,ForeignKey
 from sqlalchemy import String,Integer,TIMESTAMP,DECIMAL
 
-class User(Base):
-    pass
-
-# 退库
-class Cancellings(Base):
-    __tablename__ = "cancelling"
-    id = Column(Integer,primary_key=True)
-    aid = Column(Integer)
-    time = Column(TIMESTAMP)
-    area = Column(Integer)
-    explain = Column(String)
-    rid = Column(Integer)
-
-
-class Admins(Base):
-    __tablename__='admin'
-    id = Column(Integer,primary_key=True)
-    username=Column(String)
-    password=Column(String)
-    type=Column(Integer)
-
-
-class Companys(Base):
-    __tablename__ = 'company'
-    id = Column(Integer, primary_key=True)
-
-class Departments(Base):
-    __tablename__ = 'department'
-    id = Column(Integer, primary_key=True)
-    cid = Column(Integer)
-
-class Users(Base):
-    _tablename__='user'
-    uid = Column(Integer,primary_key=True)
-    num = Column(String)
-    name = Column(String)
-    cid = Column(Integer)
-    did = Column(Integer)
-    email = Column(String)
-    tel = Column(Integer)
 
 class Propertys(Base):
-<<<<<<< HEAD
-    _tablename__ = 'property'
+    __tablename__ = 'property'
     id = Column(Integer, primary_key=True)
     status = Column(Integer)
     bar_codes = Column(String)
     name = Column(String)
-
-
-    num = Column(String)
-
+    type = Column(Integer)
+    model=Column(String)
+    sn = Column(Integer)
+    unit = Column(String)
+    price = Column(DECIMAL)
+    time = Column(Integer)
+    area = Column(Integer)
+    deadline = Column(Integer)
+    source = Column(Integer)
+    remark = Column(String)
+    img = Column(String)
+    supplier = Column(String)
+    linkman = Column(String)
+    tel = Column(String)
+    expir = Column(DateTime)
+    info = Column(String)
+    aid = Column(Integer)
     cid = Column(Integer)
+    uid = Column(Integer)
     did = Column(Integer)
-    email = Column(String)
-    tel = Column(Integer)
-=======
-    pass
->>>>>>> b1f162df059decd86c118ba1fce12b0b952a2165
+
