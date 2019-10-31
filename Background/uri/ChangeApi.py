@@ -88,6 +88,7 @@ class Change(Resource):
         arr = [Mold(Warehouse(EditTime(marshal(item, change_fields)))) for item in data]
         return {"code":200,"msg":'ok','data':arr}
 
+    # 添加
     def post(self):
         data = request.get_json(silent=True)
         print(data)

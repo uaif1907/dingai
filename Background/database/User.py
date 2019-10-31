@@ -4,6 +4,7 @@ from sqlalchemy import Column,Integer,String,TIMESTAMP,ForeignKey
 from sqlalchemy import String,Integer,TIMESTAMP,DECIMAL
 class Users(Base):
     __tablename__='user'
+
     uid = Column(Integer,primary_key=True)
     num = Column(String)
     name = Column(String)
