@@ -48,20 +48,20 @@
                                 <Status :status="scope.row.status"></Status>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="bar_code" label="资产条码" width="140"> </el-table-column>
+                        <el-table-column prop="bar_codes" label="资产条码" width="140"> </el-table-column>
                         <el-table-column prop="name" label="资产名称" width="150"> </el-table-column>
-                        <el-table-column prop="type_id" label="资产类型" width="150"> </el-table-column>
-                        <el-table-column prop="specification" label="规格型号" width="100"> </el-table-column>
+                        <el-table-column prop="type" label="资产类型" width="150"> </el-table-column>
+                        <el-table-column prop="model" label="规格型号" width="100"> </el-table-column>
                         <el-table-column prop="sn" label="产品序列" width="100"> </el-table-column>
-                        <el-table-column align="center" prop="metering" label="计量单位" width="80"> </el-table-column>
-                        <el-table-column prop="money" label="金额" width="100"></el-table-column>
-                        <el-table-column prop="company" label="使用公司" width="100"> </el-table-column>
-                        <el-table-column prop="department" label="使用部门" width="100"> </el-table-column>
-                        <el-table-column prop="purchase_time" label="购买时间" width="120"></el-table-column>
-                        <el-table-column prop="user_id" label="使用人" width="100"> </el-table-column>
-                        <el-table-column prop="manager_id" label="管理员" width="100"> </el-table-column>
-                        <el-table-column prop="address" label="存放地点" width="100"> </el-table-column>
-                        <el-table-column prop="duration_use" label="使用期限" width="120"> </el-table-column>
+                        <el-table-column align="center" prop="unit" label="计量单位" width="80"> </el-table-column>
+                        <el-table-column prop="price" label="金额" width="100"></el-table-column>
+                        <el-table-column prop="companyname" label="使用公司" width="100"> </el-table-column>
+                        <el-table-column prop="depname" label="使用部门" width="100"> </el-table-column>
+                        <el-table-column prop="time" label="购买时间" width="120"></el-table-column>
+                        <el-table-column prop="userperson" label="使用人" width="100"> </el-table-column>
+                        <el-table-column prop="username" label="管理员" width="100"> </el-table-column>
+                        <el-table-column prop="area" label="存放地点" width="100"> </el-table-column>
+                        <el-table-column prop="deadline" label="使用期限" width="120"> </el-table-column>
                         <el-table-column prop="source" label="来源" width="80"> </el-table-column>
                         <el-table-column fixed="right" label="操作" width="100">
                             <template slot-scope="scope">
@@ -577,6 +577,7 @@
 </template>
 
 <script>
+    // import axios from 'axios'
     import Status from'@/components/data/status.vue'
     export default {
         name: 'Zcdj',
@@ -599,298 +600,56 @@
                 showRegisterData:{},
                 activeName: 'second',
                 input:'',
-                tableData: [
-                    {
-                        id:1,
-                        bar_code:"0191063662278",
-                        name:"打印机",
-                        type_id:"02",
-                        specification:"索尼3000",
-                        sn:49090343,
-                        metering:"台",
-                        money:'￥2,980.00',
-                        company:"光威",
-                        department:"",
-                        purchase_time:"2018-08-25",
-                        user_id:1001,
-                        manager_id:102,
-                        status:0,
-                        address:"办公室北区",
-                        duration_use:"",
-                        source:"购入",
-                        remarks:"",
-                        image:"",
-                        supplier:"索尼赛格旗舰店",
-                        contacts:"张素芳",
-                        tell:13131312323,
-                        expiry_time:"1529254718034",
-                        explain:""
-                    },
-                    {
-                        id:2,
-                        bar_code:"0191063662276",
-                        name:"切纸机",
-                        type_id:"03",
-                        specification:"索尼3000",
-                        sn:49090343,
-                        metering:"台",
-                        money:'￥280.00',
-                        company:"南京",
-                        department:"",
-                        purchase_time:"2018-08-26",
-                        user_id:1001,
-                        manager_id:102,
-                        status:1,
-                        address:"办公室北区",
-                        duration_use:"",
-                        source:"购入",
-                        remarks:"",
-                        image:"",
-                        supplier:"索尼赛格旗舰店",
-                        contacts:"张素芳",
-                        tell:13131312323,
-                        expiry_time:"1529254718034",
-                        explain:""
-                    },
-                    {
-                        id:3,
-                        bar_code:"0191063662267",
-                        name:"复印机",
-                        type_id:"03",
-                        specification:"索尼3000",
-                        sn:49090343,
-                        metering:"台",
-                        money:'￥280.00',
-                        company:"南京",
-                        department:"",
-                        purchase_time:"2018-08-27",
-                        user_id:1001,
-                        manager_id:102,
-                        status:2,
-                        address:"办公室北区",
-                        duration_use:"",
-                        source:"购入",
-                        remarks:"",
-                        image:"",
-                        supplier:"索尼赛格旗舰店",
-                        contacts:"张素芳",
-                        tell:13131312323,
-                        expiry_time:"1529254718034",
-                        explain:""
-                    },
-                    {
-                        id:4,
-                        bar_code:"0191064662278",
-                        name:"电风扇",
-                        type_id:"03",
-                        specification:"索尼3000",
-                        sn:49090343,
-                        metering:"台",
-                        money:'￥280.00',
-                        company:"南京",
-                        department:"",
-                        purchase_time:"2018-08-28",
-                        user_id:1001,
-                        manager_id:102,
-                        status:0,
-                        address:"办公室北区",
-                        duration_use:"",
-                        source:"购入",
-                        remarks:"",
-                        image:"",
-                        supplier:"索尼赛格旗舰店",
-                        contacts:"张素芳",
-                        tell:13131312323,
-                        expiry_time:"1529254718034",
-                        explain:""
-                    },
-                    {
-                        id:5,
-                        bar_code:"0191063662270",
-                        name:"电风扇",
-                        type_id:"03",
-                        specification:"索尼3000",
-                        sn:49090343,
-                        metering:"台",
-                        money:'￥280.00',
-                        company:"南京",
-                        department:"",
-                        purchase_time:"2018-08-29",
-                        user_id:1001,
-                        manager_id:102,
-                        status:12,
-                        address:"办公室北区",
-                        duration_use:"",
-                        source:"购入",
-                        remarks:"",
-                        image:"",
-                        supplier:"索尼赛格旗舰店",
-                        contacts:"张素芳",
-                        tell:13131312323,
-                        expiry_time:"1529254718034",
-                        explain:""
-                    },
-                    {
-                        id:6,
-                        bar_code:"0191063662277",
-                        name:"电风扇",
-                        type_id:"03",
-                        specification:"索尼3000",
-                        sn:49090343,
-                        metering:"台",
-                        money:'￥280.00',
-                        company:"南京",
-                        department:"",
-                        purchase_time:"2019-01-01",
-                        user_id:1001,
-                        manager_id:102,
-                        status:0,
-                        address:"办公室北区",
-                        duration_use:"",
-                        source:"购入",
-                        remarks:"",
-                        image:"",
-                        supplier:"索尼赛格旗舰店",
-                        contacts:"张素芳",
-                        tell:13131312323,
-                        expiry_time:"1529254718034",
-                        explain:""
-                    },
-                    {
-                        id:7,
-                        bar_code:"0191063662272",
-                        name:"电风扇",
-                        type_id:"03",
-                        specification:"索尼3000",
-                        sn:49090343,
-                        metering:"台",
-                        money:'￥280.00',
-                        company:"南京",
-                        department:"",
-                        purchase_time:"2019-01-02",
-                        user_id:1001,
-                        manager_id:102,
-                        status:4,
-                        address:"办公室北区",
-                        duration_use:"",
-                        source:"购入",
-                        remarks:"",
-                        image:"",
-                        supplier:"索尼赛格旗舰店",
-                        contacts:"张素芳",
-                        tell:13131312323,
-                        expiry_time:"1529254718034",
-                        explain:""
-                    },
-                    {
-                        id:8,
-                        bar_code:"0191063662271",
-                        name:"电风扇",
-                        type_id:"03",
-                        specification:"索尼3000",
-                        sn:49090343,
-                        metering:"台",
-                        money:'￥280.00',
-                        company:"南京",
-                        department:"",
-                        purchase_time:"2019-01-01",
-                        user_id:1001,
-                        manager_id:102,
-                        status:0,
-                        address:"办公室北区",
-                        duration_use:"",
-                        source:"购入",
-                        remarks:"",
-                        image:"",
-                        supplier:"索尼赛格旗舰店",
-                        contacts:"张素芳",
-                        tell:13131312323,
-                        expiry_time:"1529254718034",
-                        explain:""
-                    },
-                    {
-                        id:9,
-                        bar_code:"0191063662252",
-                        name:"电风扇",
-                        type_id:"03",
-                        specification:"索尼3000",
-                        sn:49090343,
-                        metering:"台",
-                        money:'￥280.00',
-                        company:"南京",
-                        department:"",
-                        purchase_time:"2019-01-01",
-                        user_id:1001,
-                        manager_id:102,
-                        status:0,
-                        address:"办公室北区",
-                        duration_use:"",
-                        source:"购入",
-                        remarks:"",
-                        image:"",
-                        supplier:"索尼赛格旗舰店",
-                        contacts:"张素芳",
-                        tell:13131312323,
-                        expiry_time:"1529254718034",
-                        explain:""
-                    },
-                    {
-                        id:10,
-                        bar_code:"0191063662252",
-                        name:"电风扇",
-                        type_id:"03",
-                        specification:"索尼3000",
-                        sn:49090343,
-                        metering:"台",
-                        money:'￥280.00',
-                        company:"南京",
-                        department:"",
-                        purchase_time:"2019-01-01",
-                        user_id:1001,
-                        manager_id:102,
-                        status:6,
-                        address:"办公室北区",
-                        duration_use:"",
-                        source:"购入",
-                        remarks:"",
-                        image:"",
-                        supplier:"索尼赛格旗舰店",
-                        contacts:"张素芳",
-                        tell:13131312323,
-                        expiry_time:"1529254718034",
-                        explain:""
-                    },
-                    {
-                        id:11,
-                        bar_code:"0191063662252",
-                        name:"电风扇",
-                        type_id:"03",
-                        specification:"索尼3000",
-                        sn:49090343,
-                        metering:"台",
-                        money:'￥280.00',
-                        company:"南京",
-                        department:"",
-                        purchase_time:"2019-01-01",
-                        user_id:1001,
-                        manager_id:102,
-                        status:8,
-                        address:"办公室北区",
-                        duration_use:"",
-                        source:"购入",
-                        remarks:"",
-                        image:"",
-                        supplier:"索尼赛格旗舰店",
-                        contacts:"张素芳",
-                        tell:13131312323,
-                        expiry_time:"1529254718034",
-                        explain:""
-                    },
-                ],
+
+                tableData:[],
+
+
+
                 currentPage2: 1,
             };
         },
+        mounted(){
+            let that =this
+          this.$axios.get("/api/property").then(res=>res.data).then(function (data) {
+              if(data.code == 200){
+                  console.log(data)
+                  console.log(data.data)
+                  that.tableData = data.data
+              }
+          }).catch(function (error) {
+              console.log(error)
+          })
+        },
+
         methods:{
+            // getdata:function(){
+            //     let url = "http://127.0.0.1:5000/api/property"
+            //     let that = this
+            //     axios.get(url).then(function (result) {
+            //         console.log(result.data.data)
+            //         that.tableData = result.data.data
+            //     })
+            // },
+            // post:function(url,data){
+            //     return new Promise(function (resolve,reiect) {
+            //         $.ajax({
+            //             type:"POST",
+            //             url:'url',
+            //             data:{'action':'el-form-item','id':data},
+            //             success:function () {
+            //                 resolve(res)
+            //             }
+            //         })
+            //     })
+            // },
+            // created(){
+            //   let _this=this
+            //   this.post('http://127.0.0.1:5000/api/property').then(function (res) {
+            //       let datas=$.parseJSON(res)
+            //       console.log(datas.data)
+            //       _this.list=datas.data
+            //   })
+            // },
             handleClick(){
 
             },

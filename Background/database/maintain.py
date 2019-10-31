@@ -19,3 +19,4 @@ class Main(Base):
     people = Column(String)
     time2 = Column(TIMESTAMP)
 
+

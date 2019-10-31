@@ -33,15 +33,17 @@
             <!--表格-->
             <el-table :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" border style="width: 100%;margin:10px 0;">
                 <el-table-column align="center" fixed type="selection" width="55"></el-table-column>
-                <el-table-column align="center" prop="pid" label="资产状态" width="100">
+                <el-table-column align="center" prop="status" label="资产状态" width="100">
                     <template slot-scope="scope">
                         <Status :status="scope.row.status"></Status>
                     </template>
                 </el-table-column>
-                <el-table-column prop="id" label="维修单号" v-model="data1"> </el-table-column>
+                <el-table-column prop="prop" label="资产" > </el-table-column>
                 <el-table-column prop="time1" label="报修时间"></el-table-column>
                 <el-table-column prop="name" label="报修人"> </el-table-column>
                 <el-table-column prop="people" label="维修人"> </el-table-column>
+                <el-table-column prop="explain" label="报修说明" v-model="data1"> </el-table-column>
+                <el-table-column prop="explain2" label="维修说明" > </el-table-column>
                 <el-table-column prop="price" label="维修花费" width="180"></el-table-column>
                 <el-table-column fixed="right" label="操作" width="100">
                     <template slot-scope="scope">
