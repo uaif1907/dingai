@@ -133,7 +133,7 @@
                             </el-col>
                             <el-col :span="8">
                                 <el-form-item label="使用公司">
-                                    <el-select v-model="addRegisterData.company" placeholder="使用公司">
+                                    <el-select v-model="addRegisterData.CompanyApi" placeholder="使用公司">
                                         <el-option value="优逸客">优逸客</el-option>
                                         <el-option value="合情合理">合情合理</el-option>
                                         <el-option value="有理有据">有理有据</el-option>
@@ -142,7 +142,7 @@
                             </el-col>
                             <el-col :span="8">
                                 <el-form-item label="使用部门">
-                                    <el-select v-model="addRegisterData.department" placeholder="使用部门">
+                                    <el-select v-model="addRegisterData.DepartmentApi" placeholder="使用部门">
                                         <el-option value="优逸客">优逸客</el-option>
                                         <el-option value="合情合理">合情合理</el-option>
                                         <el-option value="有理有据">有理有据</el-option>
@@ -308,7 +308,7 @@
                             </el-col>
                             <el-col :span="8">
                                 <el-form-item label="使用公司">
-                                    <el-select v-model="editRegisterData.company" placeholder="使用公司">
+                                    <el-select v-model="editRegisterData.CompanyApi" placeholder="使用公司">
                                         <el-option value="优逸客">优逸客</el-option>
                                         <el-option value="合情合理">合情合理</el-option>
                                         <el-option value="有理有据">有理有据</el-option>
@@ -317,7 +317,7 @@
                             </el-col>
                             <el-col :span="8">
                                 <el-form-item label="使用部门">
-                                    <el-select v-model="editRegisterData.department" placeholder="使用部门">
+                                    <el-select v-model="editRegisterData.DepartmentApi" placeholder="使用部门">
                                         <el-option value="优逸客">优逸客</el-option>
                                         <el-option value="合情合理">合情合理</el-option>
                                         <el-option value="有理有据">有理有据</el-option>
@@ -483,12 +483,12 @@
                             </el-col>
                             <el-col :span="8">
                                 <el-form-item label="使用公司">
-                                    <el-input v-model="showRegisterData.company" disabled></el-input>
+                                    <el-input v-model="showRegisterData.CompanyApi" disabled></el-input>
                                 </el-form-item>
                             </el-col>
                             <el-col :span="8">
                                 <el-form-item label="使用部门">
-                                    <el-input v-model="showRegisterData.department" disabled></el-input>
+                                    <el-input v-model="showRegisterData.DepartmentApi" disabled></el-input>
                                 </el-form-item>
                             </el-col>
                             <el-col :span="8">
@@ -577,6 +577,7 @@
 </template>
 
 <script>
+    import axios from 'axios'
     import Status from'@/components/data/status.vue'
     export default {
         name: 'Zcdj',
@@ -625,272 +626,46 @@
                         tell:13131312323,
                         expiry_time:"1529254718034",
                         explain:""
-                    },
-                    {
-                        id:2,
-                        bar_code:"0191063662276",
-                        name:"切纸机",
-                        type_id:"03",
-                        specification:"索尼3000",
-                        sn:49090343,
-                        metering:"台",
-                        money:'￥280.00',
-                        company:"南京",
-                        department:"",
-                        purchase_time:"2018-08-26",
-                        user_id:1001,
-                        manager_id:102,
-                        status:1,
-                        address:"办公室北区",
-                        duration_use:"",
-                        source:"购入",
-                        remarks:"",
-                        image:"",
-                        supplier:"索尼赛格旗舰店",
-                        contacts:"张素芳",
-                        tell:13131312323,
-                        expiry_time:"1529254718034",
-                        explain:""
-                    },
-                    {
-                        id:3,
-                        bar_code:"0191063662267",
-                        name:"复印机",
-                        type_id:"03",
-                        specification:"索尼3000",
-                        sn:49090343,
-                        metering:"台",
-                        money:'￥280.00',
-                        company:"南京",
-                        department:"",
-                        purchase_time:"2018-08-27",
-                        user_id:1001,
-                        manager_id:102,
-                        status:2,
-                        address:"办公室北区",
-                        duration_use:"",
-                        source:"购入",
-                        remarks:"",
-                        image:"",
-                        supplier:"索尼赛格旗舰店",
-                        contacts:"张素芳",
-                        tell:13131312323,
-                        expiry_time:"1529254718034",
-                        explain:""
-                    },
-                    {
-                        id:4,
-                        bar_code:"0191064662278",
-                        name:"电风扇",
-                        type_id:"03",
-                        specification:"索尼3000",
-                        sn:49090343,
-                        metering:"台",
-                        money:'￥280.00',
-                        company:"南京",
-                        department:"",
-                        purchase_time:"2018-08-28",
-                        user_id:1001,
-                        manager_id:102,
-                        status:0,
-                        address:"办公室北区",
-                        duration_use:"",
-                        source:"购入",
-                        remarks:"",
-                        image:"",
-                        supplier:"索尼赛格旗舰店",
-                        contacts:"张素芳",
-                        tell:13131312323,
-                        expiry_time:"1529254718034",
-                        explain:""
-                    },
-                    {
-                        id:5,
-                        bar_code:"0191063662270",
-                        name:"电风扇",
-                        type_id:"03",
-                        specification:"索尼3000",
-                        sn:49090343,
-                        metering:"台",
-                        money:'￥280.00',
-                        company:"南京",
-                        department:"",
-                        purchase_time:"2018-08-29",
-                        user_id:1001,
-                        manager_id:102,
-                        status:12,
-                        address:"办公室北区",
-                        duration_use:"",
-                        source:"购入",
-                        remarks:"",
-                        image:"",
-                        supplier:"索尼赛格旗舰店",
-                        contacts:"张素芳",
-                        tell:13131312323,
-                        expiry_time:"1529254718034",
-                        explain:""
-                    },
-                    {
-                        id:6,
-                        bar_code:"0191063662277",
-                        name:"电风扇",
-                        type_id:"03",
-                        specification:"索尼3000",
-                        sn:49090343,
-                        metering:"台",
-                        money:'￥280.00',
-                        company:"南京",
-                        department:"",
-                        purchase_time:"2019-01-01",
-                        user_id:1001,
-                        manager_id:102,
-                        status:0,
-                        address:"办公室北区",
-                        duration_use:"",
-                        source:"购入",
-                        remarks:"",
-                        image:"",
-                        supplier:"索尼赛格旗舰店",
-                        contacts:"张素芳",
-                        tell:13131312323,
-                        expiry_time:"1529254718034",
-                        explain:""
-                    },
-                    {
-                        id:7,
-                        bar_code:"0191063662272",
-                        name:"电风扇",
-                        type_id:"03",
-                        specification:"索尼3000",
-                        sn:49090343,
-                        metering:"台",
-                        money:'￥280.00',
-                        company:"南京",
-                        department:"",
-                        purchase_time:"2019-01-02",
-                        user_id:1001,
-                        manager_id:102,
-                        status:4,
-                        address:"办公室北区",
-                        duration_use:"",
-                        source:"购入",
-                        remarks:"",
-                        image:"",
-                        supplier:"索尼赛格旗舰店",
-                        contacts:"张素芳",
-                        tell:13131312323,
-                        expiry_time:"1529254718034",
-                        explain:""
-                    },
-                    {
-                        id:8,
-                        bar_code:"0191063662271",
-                        name:"电风扇",
-                        type_id:"03",
-                        specification:"索尼3000",
-                        sn:49090343,
-                        metering:"台",
-                        money:'￥280.00',
-                        company:"南京",
-                        department:"",
-                        purchase_time:"2019-01-01",
-                        user_id:1001,
-                        manager_id:102,
-                        status:0,
-                        address:"办公室北区",
-                        duration_use:"",
-                        source:"购入",
-                        remarks:"",
-                        image:"",
-                        supplier:"索尼赛格旗舰店",
-                        contacts:"张素芳",
-                        tell:13131312323,
-                        expiry_time:"1529254718034",
-                        explain:""
-                    },
-                    {
-                        id:9,
-                        bar_code:"0191063662252",
-                        name:"电风扇",
-                        type_id:"03",
-                        specification:"索尼3000",
-                        sn:49090343,
-                        metering:"台",
-                        money:'￥280.00',
-                        company:"南京",
-                        department:"",
-                        purchase_time:"2019-01-01",
-                        user_id:1001,
-                        manager_id:102,
-                        status:0,
-                        address:"办公室北区",
-                        duration_use:"",
-                        source:"购入",
-                        remarks:"",
-                        image:"",
-                        supplier:"索尼赛格旗舰店",
-                        contacts:"张素芳",
-                        tell:13131312323,
-                        expiry_time:"1529254718034",
-                        explain:""
-                    },
-                    {
-                        id:10,
-                        bar_code:"0191063662252",
-                        name:"电风扇",
-                        type_id:"03",
-                        specification:"索尼3000",
-                        sn:49090343,
-                        metering:"台",
-                        money:'￥280.00',
-                        company:"南京",
-                        department:"",
-                        purchase_time:"2019-01-01",
-                        user_id:1001,
-                        manager_id:102,
-                        status:6,
-                        address:"办公室北区",
-                        duration_use:"",
-                        source:"购入",
-                        remarks:"",
-                        image:"",
-                        supplier:"索尼赛格旗舰店",
-                        contacts:"张素芳",
-                        tell:13131312323,
-                        expiry_time:"1529254718034",
-                        explain:""
-                    },
-                    {
-                        id:11,
-                        bar_code:"0191063662252",
-                        name:"电风扇",
-                        type_id:"03",
-                        specification:"索尼3000",
-                        sn:49090343,
-                        metering:"台",
-                        money:'￥280.00',
-                        company:"南京",
-                        department:"",
-                        purchase_time:"2019-01-01",
-                        user_id:1001,
-                        manager_id:102,
-                        status:8,
-                        address:"办公室北区",
-                        duration_use:"",
-                        source:"购入",
-                        remarks:"",
-                        image:"",
-                        supplier:"索尼赛格旗舰店",
-                        contacts:"张素芳",
-                        tell:13131312323,
-                        expiry_time:"1529254718034",
-                        explain:""
-                    },
+                    }
                 ],
                 currentPage2: 1,
             };
         },
+        mounted(){
+            this.$axios.get("/api/property").then((res)=>{
+                console.log(res.data)
+                // this.tableData = res.data
+            })
+        },
         methods:{
+            // getdata:function(){
+            //     let url = "http://127.0.0.1:5000/api/property"
+            //     let that = this
+            //     axios.get(url).then(function (result) {
+            //         console.log(result.data.data)
+            //         that.tableData = result.data.data
+            //     })
+            // },
+            // post:function(url,data){
+            //     return new Promise(function (resolve,reiect) {
+            //         $.ajax({
+            //             type:"POST",
+            //             url:'url',
+            //             data:{'action':'el-form-item','id':data},
+            //             success:function () {
+            //                 resolve(res)
+            //             }
+            //         })
+            //     })
+            // },
+            // created(){
+            //   let _this=this
+            //   this.post('http://127.0.0.1:5000/api/property').then(function (res) {
+            //       let datas=$.parseJSON(res)
+            //       console.log(datas.data)
+            //       _this.list=datas.data
+            //   })
+            // },
             handleClick(){
 
             },

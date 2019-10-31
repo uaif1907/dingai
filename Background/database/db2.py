@@ -6,7 +6,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
-ssh_host = "39.108.113.110"  # 堡垒机ip地址或主机名
+ssh_host = ""  # 堡垒机ip地址或主机名
 ssh_port = 22  # 堡垒机连接mysql服务器的端口号，一般都是22，必须是数字
 ssh_user = ""  # 这是你在堡垒机上的用户名
 ssh_password = ""  # 这是你在堡垒机上的用户密码

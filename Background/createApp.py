@@ -4,8 +4,12 @@ from flask_restful import Api
 # URI
 from .uri.UserApi import User
 from .uri.ChangeApi import Change
+from .uri.CancellingApi import Cancelling
 
-
+from .uri.AdminApi import Admin
+from .uri.CompanyApi import Company
+from .uri.DepartmentApi import Department
+from .uri.PropertyApi import Property
 
 def getApp():
     # 创建应用
@@ -14,8 +18,16 @@ def getApp():
     app.config.from_object("config")
 
     api = Api(app)
-    api.add_resource(User,"/api/user/<int:cid>/<int:did>",endpoint="user")
-    api.add_resource(Change,"/api/change",endpoint="change")
 
+
+
+    # 注册接口
+    api.add_resource(User,"/api/user/<int:cid>/<int:did>",endpoint="user")
+    api.add_resource(Cancelling,"/api/cancelling/<int:aid>/<int:area>/<int:rid>",endpoint="cancelling")
+    api.add_resource(Admin, "/api/admin", endpoint="admin")
+    api.add_resource(Company, "/api/company", endpoint="company")
+    api.add_resource(Department, "/api/department", endpoint="department")
+    api.add_resource(Property, "/api/property", endpoint="property")
+    api.add_resource(Change, "/api/change", endpoint="change")
 
     return app
