@@ -24,16 +24,16 @@
             </el-col>
         </el-row>
         <!--表格-->
-        <el-table :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" border style="width: 100%;margin:10px 0;">
+        <el-table :data="mysqlData.slice((currentPage-1)*pageSize,currentPage*pageSize)" border style="width: 100%;margin:10px 0;">
             <el-table-column fixed type="selection" width="55"></el-table-column>
-            <el-table-column prop="collar_number" label="变更单号" width="160"></el-table-column>
-            <el-table-column prop="collar_time" label="变更时间" width="120"></el-table-column>
-            <el-table-column prop="personnel_name" label="资产名称" width="100"></el-table-column>
-            <el-table-column prop="department_name" label="资产类型" width="140"></el-table-column>
-            <el-table-column prop="company_name" label="使用人"></el-table-column>
-            <el-table-column prop="company" label="使用公司"></el-table-column>
-            <el-table-column prop="company_department" label="使用部门"></el-table-column>
-            <el-table-column prop="user" label="管理员" width="120"></el-table-column>
+            <el-table-column prop="oid" label="变更单号" width="160"></el-table-column>
+            <el-table-column prop="ctime" label="变更时间" width="160"></el-table-column>
+            <el-table-column prop="name" label="资产名称" width="100"></el-table-column>
+            <el-table-column prop="type" label="资产类型" width="140"></el-table-column>
+            <el-table-column prop="linkman" label="使用人"></el-table-column>
+            <el-table-column prop="supplier" label="使用公司"></el-table-column>
+            <el-table-column prop="" label="使用部门"></el-table-column>
+            <el-table-column prop="aid" label="管理员" width="120"></el-table-column>
             <el-table-column fixed="right" label="操作" width="100">
                 <template slot-scope="scope">
                     <el-button @click="handleClickShowCollar(scope.row)" type="text" >查看</el-button>
@@ -289,6 +289,7 @@
 <script>
     import Selectuser from '@/components/Withdraw/selectuser.vue'
     import Selectedassets from '@/components/Withdraw/selectedassets.vue'
+
     export default {
         name: 'withdraws',
         props: {
@@ -296,6 +297,7 @@
         },
         data(){
             return{
+                mysqlData:[],
                 total:100,//默认数据总数
                 currentPage:1,//默认开始页面
                 pageSize:10,//每页的数据条数
@@ -392,6 +394,7 @@
                         collar_times:'1529254718034'
                     },
                 ],
+
             }
         },
         methods: {
@@ -432,7 +435,19 @@
         components:{
             Selectuser,
             Selectedassets
-        }
+        },
+        mounted() {
+            let that = this;
+            this.$axios.get("/api/change").then(res => res.data).then(function(data){
+                if(data.code == 200){
+                    console.log(data);
+                    console.log(data.data);
+                    that.mysqlData = data.data
+                }
+            }).catch(function (error) {
+                console.log(error)
+            })
+        },
     }
 </script>
 

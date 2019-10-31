@@ -42,7 +42,9 @@
     components:{
       changeInformation,
       changeMaintenance
-    }
+    },
+
+
 
   }
 </script>
