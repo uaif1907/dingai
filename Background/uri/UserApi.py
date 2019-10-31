@@ -19,6 +19,6 @@ class User(Resource):
         :return:  返回此部门下所有的用户
         """
         data= session.query(Users).all()
-        print(data)
+        data = [ marshal(item,user_fields) for item in data]
 
-        return {"code":200,"msg":"ok"}
+        return {"code":200,"data":data}
