@@ -75,13 +75,7 @@ export default {
         });
     }
   },
-<<<<<<< HEAD
-  // mounted() {
-  //   this.$axios.get("/api/user/1/1").then(function(res){
-  //     console.log(res.data)
-  //   })
-  // }
-=======
+
   mounted() {
     this.$axios.get("/api/user/1/1").then(function(res){
       console.log(res.data)
@@ -90,7 +84,6 @@ export default {
     //   console.log(res.data)
     // })
   }
->>>>>>> 0591bd26e7d2c5d261650b10cf2e155ce357f754
 }
 </script>
 <style>

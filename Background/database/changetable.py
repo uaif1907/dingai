@@ -1,6 +1,7 @@
 # 贾争
 from .db import Base,session
 from sqlalchemy import String,Integer,TIMESTAMP,DECIMAL,Column,ForeignKey
+from sqlalchemy.orm import relationship
 
 class Change(Base):
     __tablename__ = "change"
@@ -23,4 +24,11 @@ class Change(Base):
     expir = Column(TIMESTAMP)
     info = Column(String)
     cid = Column(Integer,ForeignKey("company.id"))
-    did = Column(Integer,ForeignKey("Department"))
+    did = Column(Integer,ForeignKey("department.id"))
+    pid = Column(Integer,ForeignKey("property.id"))
+    img = Column(String)
+    remark = Column(String)
+    admin = relationship("Admins", foreign_keys=aid)
+    company = relationship('Companys', foreign_keys=cid)
+    department = relationship("Departments", foreign_keys=did)
+    property = relationship("Propertys",foreign_keys=pid)

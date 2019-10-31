@@ -29,11 +29,11 @@
             <el-table-column prop="oid" label="变更单号" width="160"></el-table-column>
             <el-table-column prop="ctime" label="变更时间" width="160"></el-table-column>
             <el-table-column prop="name" label="资产名称" width="100"></el-table-column>
-            <el-table-column prop="type" label="资产类型" width="140"></el-table-column>
+            <el-table-column prop="type" label="资产类型" width="160"></el-table-column>
             <el-table-column prop="linkman" label="使用人"></el-table-column>
-            <el-table-column prop="supplier" label="使用公司"></el-table-column>
-            <el-table-column prop="" label="使用部门"></el-table-column>
-            <el-table-column prop="aid" label="管理员" width="120"></el-table-column>
+            <el-table-column prop="companyname" label="使用公司"></el-table-column>
+            <el-table-column prop="departmentname" label="使用部门"></el-table-column>
+            <el-table-column prop="username" label="管理员" width="120"></el-table-column>
             <el-table-column fixed="right" label="操作" width="100">
                 <template slot-scope="scope">
                     <el-button @click="handleClickShowCollar(scope.row)" type="text" >查看</el-button>
@@ -61,17 +61,17 @@
                 <el-row>
                     <el-col :span="12">
                         <el-form-item label="变更单号" size="small">
-                            <el-input v-model="addCollarForm.modify_number" disabled></el-input>
+                            <el-input v-model="addCollarForm.oid"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
                         <el-form-item label="处理时间" size="small">
                             <el-date-picker
-                                    v-model="addCollarForm.time"
+                                    v-model="addCollarForm.ctime"
                                     type="date"
                                     format="yyyy 年 MM 月 dd 日"
-                                    value-format="timestamp"
                                     style="width:100%;"
+                                    value-format="timestamp"
                                     placeholder="选择领用日期">
                             </el-date-picker>
                         </el-form-item>
@@ -83,23 +83,22 @@
                 <el-row>
                     <el-col :span="8">
                         <el-form-item label="资产名称" size="small">
-                            <el-input v-model="addCollarForm.name" placeholder="资产名称"size="small">
+                            <el-input v-model="addCollarForm.name" placeholder="资产名称" size="small">
                                 <el-button slot="append" type="primary" icon="el-icon-office-building" @click="selectAssetsDialogVisible=true"></el-button>
                             </el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="资产类型" size="small">
-                            <el-select v-model="addCollarForm.type_id" placeholder="资产类型">
-                                <el-option value="我的">我的</el-option>
-                                <el-option value="你的">你的</el-option>
-                                <el-option value="大家的">大家的</el-option>
+                            <el-select v-model="addCollarForm.type" placeholder="资产类型">
+                                <el-option value="1">我的</el-option>
+                                <el-option value="2">你的</el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="规格型号" size="small">
-                            <el-input v-model="addCollarForm.specification" placeholder="规格型号"></el-input>
+                            <el-input v-model="addCollarForm.model" placeholder="规格型号"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8" class="sn-box">
@@ -109,56 +108,76 @@
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="计量单位" size="small">
-                            <el-input v-model="addCollarForm.metering" placeholder="计量单位"></el-input>
+                            <el-input v-model="addCollarForm.unit" placeholder="计量单位"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="管理员" size="small">
-                            <el-select v-model="addCollarForm.manager_id" placeholder="管理员">
-                                <el-option value="我的">我的</el-option>
-                                <el-option value="你的">你的</el-option>
-                                <el-option value="大家的">大家的</el-option>
+                            <el-select v-model="addCollarForm.aid" placeholder="管理员">
+                                <el-option value="1">我的</el-option>
+                                <el-option value="2">你的</el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item label="使用人" size="small">
+                            <el-input v-model="addCollarForm.linkman" placeholder="使用人"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item label="使用公司" size="small">
+                            <el-select v-model="addCollarForm.cid" placeholder="使用公司">
+                                <el-option value="1">我的</el-option>
+                                <el-option value="2">你的</el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item label="使用部门" size="small">
+                            <el-select v-model="addCollarForm.did" placeholder="使用部门">
+                                <el-option value="1">我的</el-option>
+                                <el-option value="2">你的</el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="存放地点" size="small">
-                            <el-select v-model="addCollarForm.warehouse_id" placeholder="存放地点">
-                                <el-option value="我的">我的</el-option>
-                                <el-option value="你的">你的</el-option>
-                                <el-option value="大家的">大家的</el-option>
+                            <el-select v-model="addCollarForm.area" placeholder="存放地点">
+                                <el-option value="1">我的</el-option>
+                                <el-option value="2">你的</el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="使用期限" size="small">
-                            <el-input v-model="addCollarForm.duration_use" placeholder="使用期限(月)"></el-input>
+                            <el-input v-model="addCollarForm.deadline" placeholder="使用期限(月)"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="来源" size="small">
-                            <el-select v-model="addCollarForm.source" placeholder="来源">
-                                <el-option value="我的">我的</el-option>
-                                <el-option value="你的">你的</el-option>
-                                <el-option value="大家的">大家的</el-option>
+                            <el-select v-model="addCollarForm.pid" placeholder="来源">
+                                <el-option value="1">我的</el-option>
+                                <el-option value="2">你的</el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
                     <el-col :span="16">
                         <el-form-item label="备注" size="small">
-                            <el-input type="textarea" v-model="addCollarForm.remarks" placeholder="备注"></el-input>
+                            <el-input type="textarea" v-model="addCollarForm.remark" placeholder="备注"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="资产照片" size="small">
                             <el-upload
-                                    class="assets-uploader"
-                                    action="https://jsonplaceholder.typicode.com/posts/"
-                                    :show-file-list="false"
-                                    :on-success="handleAvatarSuccess"
-                                    :before-upload="beforeAvatarUpload">
+                                    action="/api/change"
+                                    list-type="picture-card"
+                                    :on-preview="handlePictureCardPreview"
+                                    :on-remove="handleRemove">
                                 <i class="el-icon-plus"></i>
                             </el-upload>
+                            <el-dialog :visible.sync="dialogVisible">
+                                <img width="100%" :src="dialogImageUrl" alt="">
+                            </el-dialog>
                         </el-form-item>
                     </el-col>
 
@@ -192,18 +211,19 @@
                 <el-row>
                     <el-col :span="12">
                         <el-form-item label="变更单号">
-                            <el-input v-model="showCollarForm.collar_number" disabled></el-input>
+                            <el-input v-model="showCollarForm.oid" disabled></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
                         <el-form-item label="处理时间">
                             <el-date-picker
-                                    v-model="showCollarForm.collar_times"
+                                    v-model="showCollarForm.ctime"
                                     type="date"
                                     format="yyyy 年 MM 月 dd 日"
-                                    value-format="timestamp"
                                     style="width:100%;"
-                                    placeholder="选择领用日期">
+                                    placeholder="选择领用日期"
+                                    disabled>
+
                             </el-date-picker>
                         </el-form-item>
                     </el-col>
@@ -214,64 +234,61 @@
                 <el-row>
                     <el-col :span="8">
                         <el-form-item label="资产名称">
-                            <el-input v-model="showCollarForm.personnel_name" placeholder="资产名称"></el-input>
+                            <el-input v-model="showCollarForm.name" placeholder="资产名称" disabled></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="资产类型">
-                            <el-input v-model="showCollarForm.department_name" placeholder="资产类型"></el-input>
+                            <el-input v-model="showCollarForm.type" placeholder="资产类型" disabled></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="规格型号">
-                            <el-input v-model="showCollarForm.model" placeholder="规格型号"></el-input>
+                            <el-input v-model="showCollarForm.model" placeholder="规格型号" disabled></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8" class="sn-box">
                         <el-form-item label="SN号">
-                            <el-input v-model="showCollarForm.sn" placeholder="SN号"></el-input>
+                            <el-input v-model="showCollarForm.sn" placeholder="SN号" disabled></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="计量单位">
-                            <el-input v-model="showCollarForm.unit" placeholder="计量单位"></el-input>
+                            <el-input v-model="showCollarForm.unit" placeholder="计量单位" disabled></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="管理员">
-                            <el-input v-model="showCollarForm.user" placeholder="管理员"></el-input>
+                            <el-input v-model="showCollarForm.username" placeholder="管理员" disabled></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="存放地点">
-                            <el-input v-model="showCollarForm.location" placeholder="存放地点"></el-input>
+                            <el-input v-model="showCollarForm.area" placeholder="存放地点" disabled></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="使用期限">
-                            <el-input v-model="showCollarForm.age" placeholder="使用期限(月)"></el-input>
+                            <el-input v-model="showCollarForm.deadline" placeholder="使用期限(月)" disabled></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="来源">
-                            <el-input v-model="showCollarForm.source" placeholder="来源"></el-input>
+                            <el-input v-model="showCollarForm.source" placeholder="来源" disabled></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="16">
                         <el-form-item label="备注">
-                            <el-input type="textarea" v-model="showCollarForm.remarks" placeholder="备注"></el-input>
+                            <el-input type="textarea" v-model="showCollarForm.remark" placeholder="备注" disabled></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="资产照片">
-                            <el-upload
-                                    class="assets-uploader"
-                                    action="https://jsonplaceholder.typicode.com/posts/"
-                                    :show-file-list="false"
-                                    :on-success="handleAvatarSuccess"
-                                    :before-upload="beforeAvatarUpload">
-                                <i class="el-icon-plus"></i>
-                            </el-upload>
+                            <el-image
+                                    style="width: 100px; height: 100px"
+                                    :src="showCollarForm.img"
+                                    prop="order">
+                            </el-image>
                         </el-form-item>
                     </el-col>
 
@@ -297,16 +314,16 @@
         },
         data(){
             return{
+                dialogImageUrl: '',
+                dialogVisible: false,
                 mysqlData:[],
                 total:100,//默认数据总数
                 currentPage:1,//默认开始页面
-                pageSize:10,//每页的数据条数
+                pageSize:5,//每页的数据条数
                 searchDate:[],
                 addCollarDialogVisible:false,
                 selectPersonDialogVisible:false,
-                addCollarForm:{
-                    time:Date.now()
-                },
+                addCollarForm:{},
                 showCollarForm:{},
                 showCollarDialogVisible:false,
                 selectAssetsDialogVisible:false,
@@ -398,6 +415,13 @@
             }
         },
         methods: {
+            handleRemove(file, fileList) {
+                console.log(file, fileList);
+            },
+            handlePictureCardPreview(file) {
+                this.dialogImageUrl = file.url;
+                this.dialogVisible = true;
+            },
             deleteRow(index, rows) {
                 rows.splice(index, 1);
             },
@@ -423,7 +447,15 @@
             },
             fun1(data){
                 this.addCollarDialogVisible = false;
-                this.tableData.push(data)
+                // this.tableData.push(data)
+                console.log(data);
+                this.$axios.post("/api/change",data)
+                    .then((response) => {
+                        console.log(response.data)
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    })
             },
             handleAvatarSuccess(){
                 this.imageUrl = URL.createObjectURL(file.raw);
@@ -446,7 +478,7 @@
                 }
             }).catch(function (error) {
                 console.log(error)
-            })
+            });
         },
     }
 </script>
