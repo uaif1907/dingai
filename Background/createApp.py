@@ -10,7 +10,7 @@ from .uri.AdminApi import Admin
 from .uri.CompanyApi import Company
 from .uri.DepartmentApi import Department
 from .uri.PropertyApi import Property
-
+from .uri.MaintainApi import Maintain
 def getApp():
     # 创建应用
     app = Flask(__name__)
@@ -26,4 +26,5 @@ def getApp():
     api.add_resource(Department, "/api/department", endpoint="department")
     api.add_resource(Property, "/api/property", endpoint="property")
 
+    api.add_resource(Maintain, "/api/maintain/<int:uid>", endpoint="maintain")
     return app

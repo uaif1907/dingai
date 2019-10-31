@@ -12,7 +12,7 @@
                 <!--按钮-->
                 <el-col :span="12">
                     <el-button type="primary" size="small" icon="el-icon-plus" @click="addCollarDialogVisible = true">新增</el-button>
-                    <el-button size="small" icon="el-icon-printer">打印</el-button>
+                    <el-button size="small" icon="el-icon-printer" >打印</el-button>
                     <el-button size="small" icon="el-icon-upload2">导出</el-button>
                 </el-col>
                 <!--日历-->
@@ -33,16 +33,16 @@
             <!--表格-->
             <el-table :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" border style="width: 100%;margin:10px 0;">
                 <el-table-column align="center" fixed type="selection" width="55"></el-table-column>
-                <el-table-column align="center" prop="status" label="资产状态" width="100">
+                <el-table-column align="center" prop="pid" label="资产状态" width="100">
                     <template slot-scope="scope">
                         <Status :status="scope.row.status"></Status>
                     </template>
                 </el-table-column>
-                <el-table-column prop="collar_number" label="维修单号"> </el-table-column>
-                <el-table-column prop="collar_time" label="报修时间"></el-table-column>
-                <el-table-column prop="company_name" label="报修人"> </el-table-column>
-                <el-table-column prop="service" label="维修人"> </el-table-column>
-                <el-table-column prop="expend" label="维修花费" width="180"></el-table-column>
+                <el-table-column prop="id" label="维修单号" v-model="data1"> </el-table-column>
+                <el-table-column prop="time1" label="报修时间"></el-table-column>
+                <el-table-column prop="name" label="报修人"> </el-table-column>
+                <el-table-column prop="people" label="维修人"> </el-table-column>
+                <el-table-column prop="price" label="维修花费" width="180"></el-table-column>
                 <el-table-column fixed="right" label="操作" width="100">
                     <template slot-scope="scope">
                         <el-button type="text" size="small" @click="showRegister(scope.row)">查看</el-button>
@@ -315,129 +315,32 @@
 </template>
 
 <script>
+
     import Status from'@/components/data/status.vue'
     import Selectuser from '@/components/Withdraw/selectuser.vue'
     import Selectedassets from '@/components/Withdraw/selectedassets.vue'
     export default {
+        mounted(){
+            this.find();
+
+            },
         name: 'wxgl',
         props: {
             // msg: String
         },
-        data(){
-            return{
-                editRegisterData:{},
-                editDialogTableVisible:false,
-                showRegisterData:{},
-                showDialogTableVisible:false,
-                active:0,
-                total:100,//默认数据总数
-                currentPage:1,//默认开始页面
-                pageSize:10,//每页的数据条数
-                searchDate:[],
-                addCollarDialogVisible:false,
-                selectPersonDialogVisible:false,
-                addCollarForm:{
-                    time:Date.now()
-                },
-                showCollarForm:{},
-                showCollarDialogVisible:false,
-                selectAssetsDialogVisible:false,
-                selectedCollarAssetsData:[],
-                selectCollarAssetsData:[],
-                currentPage2: 1,
-                sizeForm: {
-                    data:''
-                },
-                tableData: [
-                    {
-                        id:1,
-                        collar_number:'WB20180608001',
-                        collar_time:'2018-06-18',
-                        expend:'$98.00',
-                        service:'里斯',
-                        company_name:'张三',
-                        status_name:'已取消',
-                        Repair_remarks:'废了',
-                        servic_remarks:'换个新的XIM Alpha',
-                        collar_times:'1529254718034',
-                        times:Date.now(),
-                        status:9
-                    },
-                    {
-                        id:2,
-                        collar_number:'WB20180608001',
-                        collar_time:'2018-06-18',
-                        expend:'$98.00',
-                        service:'里斯',
-                        company_name:'张三',
-                        status_name:'已取消',
-                        Repair_remarks:'废了',
-                        servic_remarks:'换个新的XIM Alpha',
-                        collar_times:'1529254718034',
-                        times:Date.now(),
-                        status:10
-                    },
-                    {
-                        id:3,
-                        collar_number:'WB20180608001',
-                        collar_time:'2018-06-18',
-                        expend:'$98.00',
-                        service:'里斯',
-                        company_name:'张三',
-                        status_name:'已取消',
-                        Repair_remarks:'废了',
-                        servic_remarks:'换个新的XIM Alpha',
-                        collar_times:'1529254718034',
-                        times:Date.now(),
-                        status:11
-                    },
-                    {
-                        id:4,
-                        collar_number:'WB20180608001',
-                        collar_time:'2018-06-18',
-                        expend:'$98.00',
-                        service:'里斯',
-                        company_name:'张三',
-                        status_name:'已取消',
-                        Repair_remarks:'废了',
-                        servic_remarks:'换个新的XIM Alpha',
-                        collar_times:'1529254718034',
-                        times:Date.now(),
-                        status:12
-                    },
-                    {
-                        id:5,
-                        collar_number:'WB20180608001',
-                        collar_time:'2018-06-18',
-                        expend:'$98.00',
-                        service:'里斯',
-                        company_name:'张三',
-                        status_name:'已取消',
-                        Repair_remarks:'废了',
-                        servic_remarks:'换个新的XIM Alpha',
-                        collar_times:'1529254718034',
-                        times:Date.now(),
-                        status:13
-                    },
-                    {
-                        id:6,
-                        collar_number:'WB20180608001',
-                        collar_time:'2018-06-18',
-                        expend:'$98.00',
-                        service:'里斯',
-                        company_name:'张三',
-                        status_name:'已取消',
-                        Repair_remarks:'废了',
-                        servic_remarks:'换个新的XIM Alpha',
-                        collar_times:'1529254718034',
-                        times:Date.now(),
-                        status:14
-                    },
+         methods: {
+            find(){
 
-                ],
-            }
-        },
-        methods: {
+            this.$axios.get("/api/maintain/1").then(res=>{
+
+            const data1 = res.data.data;
+
+            this.tableData=data1;
+            console.log(data1,typeof(data1));
+            });
+
+            },
+
             deleteRow(index, rows) {
                 rows.splice(index, 1);
             },
@@ -446,6 +349,7 @@
             },
             handleCurrentChange(val) {
                 // console.log(`当前页: ${val}`);
+                console.log(this.data1);
                 this.currentPage = val;
             },
             handleSelectionDone(){
@@ -501,11 +405,141 @@
                 }
             },
         },
+        data(){
+            return{
+                data1:'',
+                editRegisterData:{},
+                editDialogTableVisible:false,
+                showRegisterData:{},
+                showDialogTableVisible:false,
+                active:0,
+                total:100,//默认数据总数
+                currentPage:1,//默认开始页面
+                pageSize:10,//每页的数据条数
+                searchDate:[],
+                addCollarDialogVisible:false,
+                selectPersonDialogVisible:false,
+                addCollarForm:{
+                    time:Date.now()
+                },
+                showCollarForm:{},
+                showCollarDialogVisible:false,
+                selectAssetsDialogVisible:false,
+                selectedCollarAssetsData:[],
+                selectCollarAssetsData:[],
+                currentPage2: 1,
+                sizeForm: {
+                    data:[]
+                },
+                tableData: [
+                    // {
+                    //     id:1,
+                    //     collar_number:this.data1,
+                    //     collar_time:'2018-06-18',
+                    //     expend:'$98.00',
+                    //     service:'里斯',
+                    //     company_name:'张三',
+                    //     status_name:'已取消',
+                    //     Repair_remarks:'废了',
+                    //     servic_remarks:'换个新的XIM Alpha',
+                    //     collar_times:'1529254718034',
+                    //     times:Date.now(),
+                    //     status:9
+                    // },
+                    // {
+                    //     id:2,
+                    //     collar_number:'WB20180608001',
+                    //     collar_time:'2018-06-18',
+                    //     expend:'$98.00',
+                    //     service:'里斯',
+                    //     company_name:'张三',
+                    //     status_name:'已取消',
+                    //     Repair_remarks:'废了',
+                    //     servic_remarks:'换个新的XIM Alpha',
+                    //     collar_times:'1529254718034',
+                    //     times:Date.now(),
+                    //     status:10
+                    // },
+                    // {
+                    //     id:3,
+                    //     collar_number:'WB20180608001',
+                    //     collar_time:'2018-06-18',
+                    //     expend:'$98.00',
+                    //     service:'里斯',
+                    //     company_name:'张三',
+                    //     status_name:'已取消',
+                    //     Repair_remarks:'废了',
+                    //     servic_remarks:'换个新的XIM Alpha',
+                    //     collar_times:'1529254718034',
+                    //     times:Date.now(),
+                    //     status:11
+                    // },
+                    // {
+                    //     id:4,
+                    //     collar_number:'WB20180608001',
+                    //     collar_time:'2018-06-18',
+                    //     expend:'$98.00',
+                    //     service:'里斯',
+                    //     company_name:'张三',
+                    //     status_name:'已取消',
+                    //     Repair_remarks:'废了',
+                    //     servic_remarks:'换个新的XIM Alpha',
+                    //     collar_times:'1529254718034',
+                    //     times:Date.now(),
+                    //     status:12
+                    // },
+                    // {
+                    //     id:5,
+                    //     collar_number:'WB20180608001',
+                    //     collar_time:'2018-06-18',
+                    //     expend:'$98.00',
+                    //     service:'里斯',
+                    //     company_name:'张三',
+                    //     status_name:'已取消',
+                    //     Repair_remarks:'废了',
+                    //     servic_remarks:'换个新的XIM Alpha',
+                    //     collar_times:'1529254718034',
+                    //     times:Date.now(),
+                    //     status:13
+                    // },
+                    // {
+                    //     id:6,
+                    //     collar_number:'WB20180608001',
+                    //     collar_time:'2018-06-18',
+                    //     expend:'$98.00',
+                    //     service:'里斯',
+                    //     company_name:'张三',
+                    //     status_name:'已取消',
+                    //     Repair_remarks:'废了',
+                    //     servic_remarks:'换个新的XIM Alpha',
+                    //     collar_times:'1529254718034',
+                    //     times:Date.now(),
+                    //     status:14
+                    // },
+
+                ],
+
+            }
+        },
+
         components:{
             Status,
             Selectuser,
             Selectedassets
-        }
+        },
+
+        // mounted() {
+        // this.$axios.get("/api/maintain/1").then(function(res){
+        //   console.log(res.data);
+        //
+        // }
+        //     this.find();
+        //     console.log(741)
+
+    // }
+        // this.$axios.get("/api/user/1/1").then(function(res){
+        //   console.log(res.data)
+        // })
 
     }
 </script>

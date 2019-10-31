@@ -45,3 +45,4 @@ class Propertys(Base):
     did = Column(Integer)
     email = Column(String)
     tel = Column(Integer)
+    uid = Column(Integer)
