@@ -48,20 +48,20 @@
                                 <Status :status="scope.row.status"></Status>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="bar_code" label="资产条码" width="140"> </el-table-column>
+                        <el-table-column prop="bar_codes" label="资产条码" width="140"> </el-table-column>
                         <el-table-column prop="name" label="资产名称" width="150"> </el-table-column>
-                        <el-table-column prop="type_id" label="资产类型" width="150"> </el-table-column>
-                        <el-table-column prop="specification" label="规格型号" width="100"> </el-table-column>
+                        <el-table-column prop="type" label="资产类型" width="150"> </el-table-column>
+                        <el-table-column prop="model" label="规格型号" width="100"> </el-table-column>
                         <el-table-column prop="sn" label="产品序列" width="100"> </el-table-column>
-                        <el-table-column align="center" prop="metering" label="计量单位" width="80"> </el-table-column>
-                        <el-table-column prop="money" label="金额" width="100"></el-table-column>
-                        <el-table-column prop="company" label="使用公司" width="100"> </el-table-column>
-                        <el-table-column prop="department" label="使用部门" width="100"> </el-table-column>
-                        <el-table-column prop="purchase_time" label="购买时间" width="120"></el-table-column>
-                        <el-table-column prop="user_id" label="使用人" width="100"> </el-table-column>
-                        <el-table-column prop="manager_id" label="管理员" width="100"> </el-table-column>
-                        <el-table-column prop="address" label="存放地点" width="100"> </el-table-column>
-                        <el-table-column prop="duration_use" label="使用期限" width="120"> </el-table-column>
+                        <el-table-column align="center" prop="unit" label="计量单位" width="80"> </el-table-column>
+                        <el-table-column prop="price" label="金额" width="100"></el-table-column>
+                        <el-table-column prop="cid" label="使用公司" width="100"> </el-table-column>
+                        <el-table-column prop="did" label="使用部门" width="100"> </el-table-column>
+                        <el-table-column prop="time" label="购买时间" width="120"></el-table-column>
+                        <el-table-column prop="uid" label="使用人" width="100"> </el-table-column>
+                        <el-table-column prop="aid" label="管理员" width="100"> </el-table-column>
+                        <el-table-column prop="area" label="存放地点" width="100"> </el-table-column>
+                        <el-table-column prop="deadline" label="使用期限" width="120"> </el-table-column>
                         <el-table-column prop="source" label="来源" width="80"> </el-table-column>
                         <el-table-column fixed="right" label="操作" width="100">
                             <template slot-scope="scope">
@@ -577,7 +577,7 @@
 </template>
 
 <script>
-    import axios from 'axios'
+    // import axios from 'axios'
     import Status from'@/components/data/status.vue'
     export default {
         name: 'Zcdj',
@@ -600,9 +600,23 @@
                 showRegisterData:{},
                 activeName: 'second',
                 input:'',
+                tableData:[
 
+                ],
                 currentPage2: 1,
             };
+        },
+        mounted(){
+            let that =this
+          this.$axios.get("/api/property").then(res=>res.data).then(function (data) {
+              if(data.code == 200){
+                  console.log(data)
+                  console.log(data.data)
+                  that.tableData = data.data
+              }
+          }).catch(function (error) {
+              console.log(error)
+          })
         },
 
         methods:{

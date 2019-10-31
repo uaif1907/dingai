@@ -2,7 +2,7 @@ from .db import Base,session
 from sqlalchemy import String,Integer,TIMESTAMP,DECIMAL,Column,DateTime
 from sqlalchemy import Column,Integer,String,TIMESTAMP,ForeignKey
 from sqlalchemy import String,Integer,TIMESTAMP,DECIMAL
-
+from .Admin import Admins
 class Propertys(Base):
     __tablename__ = 'property'
     id = Column(Integer, primary_key=True)
@@ -25,10 +25,11 @@ class Propertys(Base):
     tel = Column(String)
     expir = Column(DateTime)
     info = Column(String)
-    aid = Column(Integer)
+    aid = Column(Integer,ForeignKey("admin.id"))
     cid = Column(Integer)
     uid = Column(Integer)
     did = Column(Integer)
-    email = Column(String)
+    admin = relationship("Admins",foreign_keys=aid)
+    # foreign_keys 创建多个反向映射时使用
 
 

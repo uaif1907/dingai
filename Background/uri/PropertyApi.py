@@ -25,7 +25,8 @@ propertys_fields = {
     'aid':fields.Integer,
     'cid':fields.Integer,
     'uid':fields.Integer,
-    'did':fields.Integer
+    'did':fields.Integer,
+    'username':fields.String
 }
 class Property(Resource):
     def get(self):
@@ -35,5 +36,7 @@ class Property(Resource):
 
         """
         data = session.query(Propertys).all()
+        for item in data:
+            item.username=item.admin.username
         arr = [(marshal(item,propertys_fields)) for item in data]
         return {"code":200,"data":arr}
