@@ -1,10 +1,10 @@
-from .db import Base,session
-from sqlalchemy import String,Integer,TIMESTAMP,DECIMAL,Column
-from sqlalchemy import Column,Integer,String,TIMESTAMP,ForeignKey
-from sqlalchemy import String,Integer,TIMESTAMP,DECIMAL
-from .property import Propertys
+from .db import Base
 
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column,ForeignKey
+from sqlalchemy import String,Integer,TIMESTAMP,DECIMAL
+
+
+
 
 
 class Main(Base):
