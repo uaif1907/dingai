@@ -12,7 +12,7 @@ Vue.config.productionTip = false;
 Vue.filter('moment', function (value, formatString) {
     formatString = formatString || 'YYYY-MM-DD';
     return moment(value).format(formatString); // value可以是普通日期 20170723
-    //return moment.unix(value).format(formatString); // 这是时间戳转时间
+    // return moment.unix(value).format(formatString); // 这是时间戳转时间
 });
 import axios from 'axios'
 import VueAxios from 'vue-axios'

@@ -27,7 +27,10 @@ propertys_fields = {
     'cid':fields.Integer,
     'uid':fields.Integer,
     'did':fields.Integer,
-    'username':fields.String
+    'username':fields.String,
+    'userperson':fields.String,
+    'companyname':fields.String,
+    'depname':fields.String,
 }
 class Property(Resource):
     def get(self):
@@ -38,8 +41,12 @@ class Property(Resource):
 
         data = session.query(Propertys).all()
         for item in data:
-            item.username = item.admin.username
 
-        data = [ marshal(item,propertys_fields) for item in data]
+            item.username=item.admin.username
+            item.userperson=item.user.name
+            item.companyname=item.company.name
+            item.depname = item.department.name
+        arr = [(marshal(item,propertys_fields)) for item in data]
+        return {"code":200,"data":arr}
 
-        return {'msg':'ok','data':data}
+
