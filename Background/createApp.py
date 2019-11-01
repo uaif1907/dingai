@@ -32,6 +32,6 @@ def getApp():
     api.add_resource(Property, "/api/property", endpoint="property")
     api.add_resource(Change, "/api/change", endpoint="change")
 
-    api.add_resource(Maintain, "/api/maintain/<int:uid>", endpoint="maintain")
+    api.add_resource(Maintain, "/api/maintain", endpoint="maintain")
 
     return app

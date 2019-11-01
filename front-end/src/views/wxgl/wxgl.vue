@@ -88,7 +88,6 @@
                                 <el-date-picker
                                         v-model="addCollarForm.time"
                                         type="date"
-                                        value-format="timestamp"
                                         style="width:100%;"
                                         placeholder="选择报修日期">
                                 </el-date-picker>
@@ -101,16 +100,31 @@
                                 </el-input>
                             </el-form-item>
                         </el-col>
+                        <el-col :span="8">
+                            <el-form-item label=" 选择资产" size="small" style="margin-left: -30px">
+                                <template>
+                                  <el-select v-model="value" placeholder="请选择">
+                                    <el-option
+                                      v-for="item in options"
+                                      :key="item.value"
+                                      :label="item.label"
+                                      :value="item.value">
+                                    </el-option>
+                                  </el-select>
+                                </template>
+                            </el-form-item>
+                        </el-col>
                         <el-col :span="24">
                             <el-form-item label="维修说明" size="small" style="margin-left: -30px">
                                 <el-input type="textarea" v-model="addCollarForm.collar_remarks" placeholder="报修说明"></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
-                    <el-row>
-                        <el-button @click="selectAssetsDialogVisible=true" size="small">选择资产</el-button>
-                        <el-button type="danger" size="small">删除</el-button>
-                    </el-row>
+                    <!--<el-row>-->
+                        <!--<el-button @click="selectAssetsDialogVisible=true" size="small">选择资产</el-button>-->
+
+                        <!--<el-button type="danger" size="small">删除</el-button>-->
+                    <!--</el-row>-->
                     <el-table :data="selectCollarAssetsData" border style="width: 100%;margin:10px 0;">
                         <el-table-column fixed type="selection" width="55"></el-table-column>
                         <el-table-column prop="bar_code" label="资产条码" width="140"> </el-table-column>
@@ -131,13 +145,13 @@
                 </span>
                 </el-dialog>
                 <!-- 选择资产弹窗 -->
-                <el-dialog title="选择资产" :visible.sync="selectAssetsDialogVisible" width="70%" append-to-body>
-                    <Selectedassets></Selectedassets>
-                    <span slot="footer" class="dialog-footer">
-                    <el-button @click="selectAssetsDialogVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="handleSelectionDone">确 定</el-button>
-                </span>
-                </el-dialog>
+                <!--<el-dialog title="选择资产" :visible.sync="selectAssetsDialogVisible" width="70%" append-to-body>-->
+                    <!--<Selectedassets></Selectedassets>-->
+                    <!--<span slot="footer" class="dialog-footer">-->
+                    <!--<el-button @click="selectAssetsDialogVisible = false">取 消</el-button>-->
+                    <!--<el-button type="primary" @click="handleSelectionDone">确 定</el-button>-->
+                <!--</span>-->
+                <!--</el-dialog>-->
                 <span slot="footer" class="dialog-footer">
                     <el-button @click="addCollarDialogVisible = false" size="small">取 消</el-button>
                     <el-button type="primary" @click="fun1(addCollarForm)" size="small">确 定</el-button>
@@ -221,7 +235,7 @@
                     </el-table>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
-                    <el-button type="primary" @click="showDialogTableVisible = false;submit">确 定</el-button>
+                    <el-button type="primary" @click="showDialogTableVisible = false">确 定</el-button>
                 </div>
             </el-dialog>
 
@@ -279,6 +293,11 @@
                                 </el-date-picker>
                             </el-form-item>
                         </el-col>
+                        <el-col :span="8">
+                            <el-form-item label="价钱" size="small" style="margin-left: -30px">
+                                <el-input type="text" v-model="editRegisterData.price" placeholder="价钱"></el-input>
+                            </el-form-item>
+                        </el-col>
                         <el-col :span="24">
                             <el-form-item label="报修说明" size="small" style="margin-left: -30px">
                                 <el-input type="textarea" v-model="editRegisterData.explain" placeholder="报修说明"></el-input>
@@ -304,7 +323,7 @@
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                     <el-button @click="editDialogTableVisible = false">取消</el-button>
-                    <el-button type="primary" @click="editRegisterDone">确 定</el-button>
+                    <el-button type="primary" @click="editRegisterDone(editRegisterData)">确 定</el-button>
                 </div>
             </el-dialog>
 
@@ -330,28 +349,17 @@
          methods: {
             find(){
 
-            this.$axios.get("/api/maintain/1").then(res=>{
+            this.$axios.get("/api/maintain").then(res=>{
 
-            const data1 = res.data.data;
 
-            this.tableData=data1;
-            console.log(data1,typeof(data1));
+
+            this.tableData=res.data.data;
+            this.options = res.data.prop;
+
             });
             },
-             submit(){
-                this.$axios({
-                        type:'post',
-                        url:"/api/maintain/2",
-                        data:'123'
-                //        this.editRegisterData
-                }).then(res=>{
-
-                console.log(123456);
-                });
-
-             },
             date(){
-                console.log(this.sizeForm.data)
+                // console.log(this.sizeForm.data)
             },
             deleteRow(index, rows) {
                 rows.splice(index, 1);
@@ -361,7 +369,7 @@
             },
             handleCurrentChange(val) {
                 // console.log(`当前页: ${val}`);
-                console.log(this.data1);
+                // console.log(this.data1);
                 this.currentPage = val;
             },
             handleSelectionDone(){
@@ -372,6 +380,7 @@
                 this.selectPersonDialogVisible = false;
                 this.addCollarForm.personnel_id = row.id;
                 this.addCollarForm.personnel_name = row.name;
+                this.ddd=row
             },
             handleClickShowCollar(data){
                 this.showCollarDialogVisible = true;
@@ -379,7 +388,24 @@
             },
             fun1(data){
                 this.addCollarDialogVisible = false;
-                this.tableData.push(data)
+                data['edit']=0;
+                data['property']=this.value;
+
+                data['pop']=this.ddd;
+                this.$axios.post(
+                       "/api/maintain",data
+                ).then(res=>{
+                this.$axios.get(
+                       "/api/maintain"
+                ).then(res=>{
+                 this.$axios.get("/api/maintain").then(res=>{
+                this.tableData=res.data.data;
+
+                 });
+
+                })
+
+                });
             },
             handleAvatarSuccess(){
                 this.imageUrl = URL.createObjectURL(file.raw);
@@ -390,11 +416,25 @@
             showRegister(row){
                 this.showDialogTableVisible = true;
                 this.showRegisterData = row;
-                console.log('点击行数',row)
+                // console.log('点击行数',row)
             },
             editRegisterDone(row){
                 this.editDialogTableVisible = false;
                 //ajax 提交编辑数据 editRegisterData
+                this.editRegisterData['edit'] = 1;
+                this.$axios.post(
+                       "/api/maintain",this.editRegisterData
+                ).then(res=>{
+                this.$axios.get(
+                       "/api/maintain"
+                ).then(res=>{
+                 this.$axios.get("/api/maintain").then(res=>{
+                this.tableData=res.data.data;
+
+            });
+                })
+                });
+
                 this.editRegisterData=row;
 
                 if(true){
@@ -415,11 +455,32 @@
                 this.editRegisterData = JSON.parse(JSON.stringify(row));
                 if (this.tableData != this.tableData) {
                     this.editRegisterData=this.tableData
+
                 }
             },
         },
         data(){
             return{
+                //资产选择
+                options: [
+                //   value: '选项1',
+                //   label: '黄金糕'
+                // }, {
+                //   value: '选项2',
+                //   label: '双皮奶'
+                // }, {
+                //   value: '选项3',
+                //   label: '蚵仔煎'
+                // }, {
+                //   value: '选项4',
+                //   label: '龙须面'
+                // }, {
+                //   value: '选项5',
+                //   label: '北京烤鸭'
+                // }
+                ],
+                value: '',
+                property:'',
                 data1:'',
                 editRegisterData:{},
                 editDialogTableVisible:false,
@@ -430,9 +491,11 @@
                 currentPage:1,//默认开始页面
                 pageSize:10,//每页的数据条数
                 searchDate:[],
+                ddd:'',
                 addCollarDialogVisible:false,
                 selectPersonDialogVisible:false,
                 addCollarForm:{
+                    handle_name:Math.random(20,30),
                     time:Date.now()
                 },
                 showCollarForm:{},
