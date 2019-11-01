@@ -71,12 +71,12 @@ export default {
               password:this.ruleForm.password
             }
           }).then((rep)=>{
-              if(rep.data.msg=="yes"){
+              if(rep.data.msg==="yes"){
                   this.$message({
                       message: '登录成功',
                       type: 'success',
                   });
-                  localStorage.token = rep.data.token
+                  localStorage.token = rep.data.token;
 
                   this.$router.push("index")
               }else{

@@ -43,29 +43,25 @@ class Maintain(Resource):
         for item in data:
             val1.append(dic)
 
-            showTime1 = item.__dict__['time1'].strftime('%Y-%m-%d %H:%M:%S')
-            # time1 = item.__dict__['time1']
-            # timeStamp = 1381419600
-            # dateArray1 = time1.utcfromtimestamp(timeStamp)
-            # showTime1 = dateArray1.strftime("%Y-%m-%d %H:%M:%S") #报修时间
+
+            # print(item.__dict__['time1'],type(item.__dict__['time1']))
+            showTime1 = str(item.__dict__['time1'])
+            item.__dict__['time1']= showTime1#报修时间
 
 
 
             try:
-                showTime2 =  item.__dict__['time2'].strftime('%Y-%m-%d %H:%M:%S')
 
+                showTime2 = str((item.__dict__['time2']))
+                item.__dict__['time2'] = showTime2
 
-                # time2 = item.__dict__['time2']
-                # dateArray2 = time2.utcfromtimestamp(timeStamp)
-                # showTime2 = dateArray2.strftime("%Y-%m-%d %H:%M:%S") #维修时间
-                # item.__dict__['time2'] = showTime2
             except:
                 now = datetime.datetime.now()
                 item.__dict__['time2'] = now.strftime('%Y-%m-%d %H:%M:%S')
 
-                # item.__dict__['time2'] = time.strftime("%Y-%m-%d %H:%M:%S",time.localtime())
+
             price = item.__dict__['price']
-            item.__dict__['time2'] = showTime2
+
             item.__dict__['time1']=showTime1
             item.__dict__['price']=str(price)+'￥'
             i = 0
@@ -96,19 +92,24 @@ class Maintain(Resource):
             b+=1
         # 处理资产产状态的拼接
 
-        for item in result:
-            pro = session.query(Propertys).filter_by(uid='%s' % item['uid']).one().__dict__
-            data0.append(pro['status'])
-            prop.append(pro['name'])
+        try:
+            for item in result:
+                pro = session.query(Propertys).filter_by(uid='%s' % item['uid']).one().__dict__
+                data0.append(pro['status'])
+                prop.append(pro['name'])
+        except BaseException as bas:
+            print(bas)
 
-
-        nu=0
-        for item3 in result:
-            item3['status'] = data0[nu]
-            item3['prop'] = prop[nu]
-            del item3['_sa_instance_state']
-            resultEnd.append(item3)
-            nu+=1
+        try:
+            nu=0
+            for item3 in result:
+                item3['status'] = data0[nu]
+                item3['prop'] = prop[nu]
+                del item3['_sa_instance_state']
+                resultEnd.append(item3)
+                nu+=1
+        except BaseException as bas:
+            print(bas)
 
 
         return jsonify({'data':resultEnd,'prop':select})
@@ -153,6 +154,11 @@ class Maintain(Resource):
             session.close()
 
             print(dataBack)
+        elif dataBack['edit']==2:
+            data = session.query(Main).filter_by(id=dataBack['id']).first()
+            session.delete(data)
+            session.commit()
+            session.close()
         return 'success'
 
 

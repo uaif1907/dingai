@@ -95,7 +95,7 @@
                         </el-col>
                         <el-col :span="8">
                             <el-form-item label="报修人" size="small">
-                                <el-input v-model="addCollarForm.personnel_name">
+                                <el-input v-model="addCollarForm.personnel_name" disabled>
                                     <el-button slot="append" icon="el-icon-user-solid" @click="selectPersonDialogVisible=true"></el-button>
                                 </el-input>
                             </el-form-item>
@@ -235,6 +235,7 @@
                     </el-table>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
+                    <el-button type="danger" @click="del(showRegisterData)">删除</el-button>
                     <el-button type="primary" @click="showDialogTableVisible = false">确 定</el-button>
                 </div>
             </el-dialog>
@@ -386,6 +387,35 @@
                 this.showCollarDialogVisible = true;
                 this.showCollarForm = data;
             },
+             del(data){
+                data['edit']=2;
+                this.$axios.post(
+                       "/api/maintain",data
+                ).then(res=>{
+                    data='';
+                    this.showDialogTableVisible=false;
+                   this.$message({
+                      message: '删除成功',
+                      type: 'success',
+                  });
+                this.$axios.get(
+                       "/api/maintain"
+                ).then(res=>{
+                 this.$axios.get("/api/maintain").then(res=>{
+                this.tableData=res.data.data;
+
+                 });
+
+                })
+
+                }).catch(res=>{
+                    this.showDialogTableVisible=false;
+                   this.$message({
+                      message: '删除失败',
+                      type: 'failed',
+                  });
+                });
+             },
             fun1(data){
                 this.addCollarDialogVisible = false;
                 data['edit']=0;
@@ -395,6 +425,7 @@
                 this.$axios.post(
                        "/api/maintain",data
                 ).then(res=>{
+                    data='';
                 this.$axios.get(
                        "/api/maintain"
                 ).then(res=>{

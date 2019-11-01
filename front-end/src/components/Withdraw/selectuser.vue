@@ -29,7 +29,7 @@
 
             let data1 = res.data.data;
             this.persons=data1
-            console.log(data1,typeof(data1));
+            // console.log(data1,typeof(data1));
             })
         },
         data(){
