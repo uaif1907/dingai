@@ -11,11 +11,17 @@ from .uri.CompanyApi import Company
 from .uri.DepartmentApi import Department
 from .uri.PropertyApi import Property
 
+
+
+
+
+
 def getApp():
     # 创建应用
     app = Flask(__name__)
     # 配置信息
     app.config.from_object("config")
+
     api = Api(app)
 
     # 注册接口
