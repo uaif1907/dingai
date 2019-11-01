@@ -5,13 +5,22 @@ from flask_restful import Api
 from .uri.UserApi import User
 from .uri.ChangeApi import Change
 from .uri.CancellingApi import Cancelling
-
+from .uri.changesApi import Changes
 from .uri.AdminApi import Admin
 from .uri.CompanyApi import Company
 from .uri.DepartmentApi import Department
 from .uri.PropertyApi import Property
+
+
+
+
+
+
+
+
 from .uri.MaintainApi import Maintain
 from .uri.OptionApi import Option
+
 def getApp():
     # 创建应用
     app = Flask(__name__)
@@ -31,7 +40,7 @@ def getApp():
     api.add_resource(Department, "/api/department", endpoint="department")
     api.add_resource(Property, "/api/property", endpoint="property")
     api.add_resource(Change, "/api/change", endpoint="change")
-
+    api.add_resource(Changes, "/api/changes", endpoint="changes")
     api.add_resource(Maintain, "/api/maintain/<int:uid>", endpoint="maintain")
 
     return app

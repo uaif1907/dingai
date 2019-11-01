@@ -10,10 +10,10 @@
     <div class="zvdj-bottom">
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="基本信息变更" name="second">
-          <changeInformation></changeInformation>
+          <changeInformation :mysqlData="mysqlData"></changeInformation>
         </el-tab-pane>
         <el-tab-pane label="维保信息变更" name="third">
-          <changeMaintenance></changeMaintenance>
+          <changeMaintenance :mysqlData="mysqlData"></changeMaintenance>
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -26,11 +26,9 @@
   import changeMaintenance from '@/components/information/changeMaintenance.vue'
   export default {
     name: 'Zcdj',
-    props: {
-      // msg: String
-    },
     data() {
       return {
+        mysqlData:[],
         activeName: 'second'
       };
     },
@@ -43,7 +41,18 @@
       changeInformation,
       changeMaintenance
     },
-
+    mounted() {
+      let that = this;
+      this.$axios.get("/api/change").then(res => res.data).then(function(data){
+        if(data.code == 200){
+          console.log(data);
+          console.log(data.data);
+          that.mysqlData = data.data
+        }
+      }).catch(function (error) {
+        console.log(error)
+      });
+    },
 
 
   }
