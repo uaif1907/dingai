@@ -35,7 +35,28 @@
         data(){
             return {
                 persons:[
-
+                    // {
+                    //     personnel_id:1,
+                    //     personnel_number:1001,
+                    //     personnel_name:"张三",
+                    //     company_id:1,
+                    //     company_name:"康佳",
+                    //     dep_id:1,
+                    //     department_name:"研发部",
+                    //     email:"zhangsan@qq.com",
+                    //     phone:13800002222
+                    // },
+                    // {
+                    //     personnel_id:2,
+                    //     personnel_number:1002,
+                    //     personnel_name:"李四",
+                    //     company_id:1,
+                    //     company_name:"康佳",
+                    //     dep_id:2,
+                    //     department_name:"人事部",
+                    //     email:"lisi@qq.com",
+                    //     phone:13800002233
+                    // }
                 ],
                 data:[{
                     label: '康佳',

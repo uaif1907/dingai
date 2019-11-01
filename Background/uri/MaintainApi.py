@@ -96,3 +96,9 @@ class Maintain(Resource):
             # print(dir(item.__dict__))
 
         return jsonify({'data':resultEnd})
+
+
+    def post(self,uid):
+        print(uid)
+
+

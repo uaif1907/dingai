@@ -178,7 +178,7 @@
                         </el-col>
                         <el-col :span="8">
                             <el-form-item label="维修状态" size="small" style="margin-left: -30px">
-                                <el-input v-model="showRegisterData.status_name" placeholder="已取消" disabled></el-input>
+                                <el-input v-model="showRegisterData.status" placeholder="已取消" disabled></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="8">
@@ -221,7 +221,7 @@
                     </el-table>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
-                    <el-button type="primary" @click="showDialogTableVisible = false">确 定</el-button>
+                    <el-button type="primary" @click="showDialogTableVisible = false;submit">确 定</el-button>
                 </div>
             </el-dialog>
 
@@ -239,15 +239,14 @@
                     <el-row>
                         <el-col :span="8">
                             <el-form-item label="维修单号" size="small" style="margin-left: -30px">
-                                <el-input v-model="editRegisterData.collar_number" placeholder="单号"></el-input>
+                                <el-input v-model="editRegisterData.pid" placeholder="单号"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="8">
                             <el-form-item label="报修时间" size="small">
                                 <el-date-picker
-                                        v-model="editRegisterData.collar_times"
+                                        v-model="editRegisterData.time1"
                                         type="date"
-                                        value-format="timestamp"
                                         style="width:100%;"
                                         placeholder="选择报修日期"
                                 >
@@ -256,39 +255,38 @@
                         </el-col>
                         <el-col :span="8">
                             <el-form-item label="报修人" size="small">
-                                <el-input v-model="editRegisterData.company_name" ></el-input>
+                                <el-input v-model="editRegisterData.name" ></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="8">
                             <el-form-item label="维修状态" size="small" style="margin-left: -30px">
-                                <el-input v-model="editRegisterData.status_name" placeholder="已取消" ></el-input>
+                                <el-input v-model="editRegisterData.status" placeholder="已取消" ></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="8">
                             <el-form-item label="维修人" size="small">
-                                <el-input v-model="editRegisterData.service" ></el-input>
+                                <el-input v-model="editRegisterData.people" ></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="8">
                             <el-form-item label="维修时间" size="small">
                                 <el-date-picker
-                                        v-model="editRegisterData.collar_times"
+                                        v-model="editRegisterData.time2"
                                         type="date"
-                                        value-format="timestamp"
                                         style="width:100%;"
-                                        placeholder="选择报修日期"
+                                        placeholder="选择维修日期"
                                 >
                                 </el-date-picker>
                             </el-form-item>
                         </el-col>
                         <el-col :span="24">
                             <el-form-item label="报修说明" size="small" style="margin-left: -30px">
-                                <el-input type="textarea" v-model="editRegisterData.Repair_remarks" placeholder="报修说明"></el-input>
+                                <el-input type="textarea" v-model="editRegisterData.explain" placeholder="报修说明"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="24">
                             <el-form-item label="维修说明" size="small" style="margin-left: -30px">
-                                <el-input type="textarea" v-model="editRegisterData.servic_remarks" placeholder="报修说明"></el-input>
+                                <el-input type="textarea" v-model="editRegisterData.explain2" placeholder="报修说明"></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
@@ -339,8 +337,19 @@
             this.tableData=data1;
             console.log(data1,typeof(data1));
             });
-
             },
+             submit(){
+                this.$axios({
+                        type:'post',
+                        url:"/api/maintain/2",
+                        data:'123'
+                //        this.editRegisterData
+                }).then(res=>{
+
+                console.log(123456);
+                });
+
+             },
             date(){
                 console.log(this.sizeForm.data)
             },
@@ -361,8 +370,8 @@
             },
             handleAddGetPerson(row){
                 this.selectPersonDialogVisible = false;
-                this.addCollarForm.personnel_id = row.personnel_id;
-                this.addCollarForm.personnel_name = row.personnel_name;
+                this.addCollarForm.personnel_id = row.id;
+                this.addCollarForm.personnel_name = row.name;
             },
             handleClickShowCollar(data){
                 this.showCollarDialogVisible = true;
@@ -383,10 +392,10 @@
                 this.showRegisterData = row;
                 console.log('点击行数',row)
             },
-            editRegisterDone(){
+            editRegisterDone(row){
                 this.editDialogTableVisible = false;
                 //ajax 提交编辑数据 editRegisterData
-                                    this.tableData[0]=this.editRegisterData;
+                this.editRegisterData=row;
 
                 if(true){
                     this.$message({
