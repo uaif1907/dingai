@@ -25,10 +25,10 @@
     <div class="copyright">
       <p>Copyright ©2018 dingai, All Rights Reserved.</p>
     </div>
-<!--    退出-->
-    <div class="close">
-      <i class="el-icon-close"></i>
-    </div>
+<!--&lt;!&ndash;    退出&ndash;&gt;-->
+<!--    <div class="close">-->
+<!--      <i class="el-icon-close"></i>-->
+<!--    </div>-->
   </div>
 </template>
 
