@@ -50,7 +50,7 @@ export default {
       rules:{
         username:[
           { required: true, message: '请输入用户名',trigger:'blur'},
-          { min: 3, max: 5, message: '长度在3到5字符', trigger: 'blur' }
+          { min: 3, max: 20, message: '长度在3到5字符', trigger: 'blur' }
         ],
         password:[
           { required: true, message: '请输入密码',trigger:'blur'},
@@ -63,11 +63,28 @@ export default {
     onSubmit(formName){
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$message({
-            message: '登录成功',
-            type: 'success',
-        });
-          this.$router.push({name:"index"});
+          this.$axios({
+            method:"post",
+            url:"api/login",
+            data:{
+              username:this.ruleForm.username,
+              password:this.ruleForm.password
+            }
+          }).then((rep)=>{
+              if(rep.data.msg=="yes"){
+                  this.$message({
+                      message: '登录成功',
+                      type: 'success',
+                  });
+                  localStorage.token = rep.data.token
+
+                  this.$router.push("index")
+              }else{
+                this.$message.error('登录失败');
+              }
+          })
+
+          // this.$router.push({name:"index"});
         } else {
           this.$message.error('登录失败');
             return false;
@@ -77,12 +94,7 @@ export default {
   },
 
   mounted() {
-    this.$axios.get("/api/user/1/1").then(function(res){
-      console.log(res.data)
-    })
-    // this.$axios.get("/api/user/1/1").then(function(res){
-    //   console.log(res.data)
-    // })
+
   }
 }
 </script>

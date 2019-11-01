@@ -10,8 +10,17 @@ from .uri.AdminApi import Admin
 from .uri.CompanyApi import Company
 from .uri.DepartmentApi import Department
 from .uri.PropertyApi import Property
+<<<<<<< HEAD
+
+
+
+
+
+
+=======
 from .uri.MaintainApi import Maintain
 from .uri.OptionApi import Option
+>>>>>>> 2fc4072397b584c178b8d9ade7796bd7ee1e8850
 def getApp():
     # 创建应用
     app = Flask(__name__)
