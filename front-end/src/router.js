@@ -37,6 +37,11 @@ export default new Router({
       path:'/index',
       name:'index',
       component: () => import('./views/index/Index.vue'),
+      meta:{
+        requiresAuth:true,
+      //  登录验证
+      },
+      //元信息元数据
       children:[
         {
           path:"dashboard",
