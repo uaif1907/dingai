@@ -11,7 +11,7 @@ class Maintain(Resource):
     def get(self):
         lis = []
         dic={}
-        val = []
+        val = [] #链表存储
         val1 = []
         prop =[] #拼接的所需的资产名字
         result = [] #结果存储
@@ -25,10 +25,11 @@ class Maintain(Resource):
         data1 = session.query(Main,Users).join(Main,Users.uid==Main.uid).all() #通过报修人信息的级联查询
         propers = session.query(Propertys).all() #资产查询
 
-        for item0 in propers:
+        for item0 in propers: #资产下拉选项
             selec['value']=item0.__dict__['uid']
             selec['label']=item0.__dict__['name']
             select.append(selec)
+            selec={}
 
 
 
@@ -42,15 +43,12 @@ class Maintain(Resource):
                 val.append(ite1.__dict__)
         for item in data:
             val1.append(dic)
-
-
-            # print(item.__dict__['time1'],type(item.__dict__['time1']))
             showTime1 = str(item.__dict__['time1'])
             item.__dict__['time1']= showTime1#报修时间
 
 
 
-            try:
+            try:  #判断是否有维修时间
 
                 showTime2 = str((item.__dict__['time2']))
                 item.__dict__['time2'] = showTime2
@@ -80,21 +78,26 @@ class Maintain(Resource):
         for itee in val:
             if(a%2!=0):
                 names.append(itee['name'])
+                # print('全部名字', itee['name'])
             a+=1
 
-        b=0
-        for itee2 in val:
 
-            if(b%2==0):
-                itee2['name']=names[b%2]
+        b=0
+        length = len(val)
+        l = 0
+        for itee2 in val: #名字序列化存储
+            if(b%2==0 and l<=length):
+                itee2['name']=names[l]
                 result.append(itee2)
+                l+=1
 
             b+=1
+
         # 处理资产产状态的拼接
 
         try:
-            for item in result:
-                pro = session.query(Propertys).filter_by(uid='%s' % item['uid']).one().__dict__
+            for item in result: #资产序列化存储
+                pro = session.query(Propertys).filter_by(uid='%s' % item['uid']).all()[0].__dict__
                 data0.append(pro['status'])
                 prop.append(pro['name'])
         except BaseException as bas:
@@ -119,36 +122,54 @@ class Maintain(Resource):
         dataBack = request.get_json(silent=True)
         if dataBack['edit']==1:
             data = session.query(Main).filter_by(id=dataBack['id']).first()
-            session.delete(data)
-            session.commit()
 
-
-            # class 'str'> 2019-11-01 19:42: 48
 
             #zt时间处理
-            c1 = time.mktime(time.strptime(dataBack['time1'], "%Y-%m-%d %H:%M:%S"))
-            t1 = datetime.datetime.fromtimestamp(c1)
-
-            c2 = time.mktime(time.strptime(dataBack['time2'], "%Y-%m-%d %H:%M:%S"))
-            t2 = datetime.datetime.fromtimestamp(c2)
-
-            print(t1,t2)
 
 
+            print('time1', dataBack['time1'])
+            print('time2', dataBack['time2'])
 
 
+            #报修时间处理
+            try:
+                c1 = time.mktime(time.strptime(dataBack['time1'], "%Y-%m-%d")) #未修改点击确认的格式
+                t1 = datetime.datetime.fromtimestamp(c1)
+                data.time1 = t1
+            except:
+                c1 = time.mktime(time.strptime(dataBack['time1'], "%Y-%m-%dT%H:%M:%S.000Z")) #修改后点击确认的格式
+                t1 = datetime.datetime.fromtimestamp(c1)
+                data.time1 = t1
 
 
-            update = Main(uid=dataBack['uid'],people=dataBack['people'],time1=t1,time2=t2,explain=dataBack['explain'],explain2=dataBack['explain2'],price=dataBack['price'].replace('￥',''),pid=dataBack['pid'])
+            #维修时间处理
+            try:
+                c2 = time.mktime(time.strptime(dataBack['time2'], "%Y-%m-%d")) #未修改点击确认的格式
+                t2 = datetime.datetime.fromtimestamp(c2)
+                data.time1 = t2
+            except:
+                c2 = time.mktime(time.strptime(dataBack['time2'], "%Y-%m-%dT%H:%M:%S.000Z")) #修改后点击确认的格式
+                t2 = datetime.datetime.fromtimestamp(c2)
+                data.time1 = t2
 
 
-            session.add(update)
+            data.explain =dataBack['explain']
+            data.explain2=dataBack['explain2']
+            data.uid=dataBack['uid']
+            data.price=dataBack['price'].replace('￥','')
+            data.num=dataBack['num']
+            data.pid =dataBack['pid']
+            data.id=data.id
             session.commit()
-            session.close()
-        elif dataBack['edit']==0:
-            # data = session.query(Main).filter_by(uid=dataBack['pop']['uid']).first()
 
-            add = Main(uid=dataBack['pop']['uid'],people='待定',pid=dataBack['pop']['did'],time1=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),explain=dataBack['collar_remarks'],price=0,time2=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+
+
+
+
+
+        elif dataBack['edit']==0:
+
+            add = Main(uid=dataBack['pop']['uid'],people='待定',pid=dataBack['pop']['did'],time1=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),explain=dataBack['collar_remarks'],price=0,time2=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),num=dataBack['handle_name'])
             session.add(add)
             session.commit()
             session.close()

@@ -17,7 +17,7 @@
                 </el-col>
                 <!--日历-->
                 <el-col :span="12">
-                    <el-button size="small" icon="el-icon-search" style="margin-left:10px;float:right;"></el-button>
+                    <el-button size="small" icon="el-icon-search" style="margin-left:10px;float:right;" @click="Search"></el-button>
                     <el-date-picker
                             v-model="sizeForm.date"
                             type="daterange"
@@ -33,9 +33,9 @@
             <!--表格-->
             <el-table :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" border style="width: 100%;margin:10px 0;">
                 <el-table-column align="center" fixed type="selection" width="55"></el-table-column>
-                <el-table-column align="center" prop="status" label="资产状态" width="100">
+                <el-table-column align="center" prop="status" label="资产状态" width="100" >
                     <template slot-scope="scope">
-                        <Status :status="scope.row.status"></Status>
+                        <Status :status="scope.row.status"  ></Status>
                     </template>
                 </el-table-column>
                 <el-table-column prop="prop" label="资产" > </el-table-column>
@@ -62,9 +62,10 @@
                         :page-sizes="[10, 20, 30, 40]"
                         :page-size="pageSize"
                         layout="sizes, prev, pager, next"
-                        :total="total"
+                        :total="this.tableData.length"
                         background>
                 </el-pagination>
+                <!--:total="total"-->
             </div>
             <!--新增维修-->
             <el-dialog title="新增维修单" :visible.sync="addCollarDialogVisible" width="70%">
@@ -125,17 +126,17 @@
 
                         <!--<el-button type="danger" size="small">删除</el-button>-->
                     <!--</el-row>-->
-                    <el-table :data="selectCollarAssetsData" border style="width: 100%;margin:10px 0;">
-                        <el-table-column fixed type="selection" width="55"></el-table-column>
-                        <el-table-column prop="bar_code" label="资产条码" width="140"> </el-table-column>
-                        <el-table-column prop="name" label="资产名称" width="150"> </el-table-column>
-                        <el-table-column prop="type_id" label="资产类型" width="150"> </el-table-column>
-                        <el-table-column prop="company" label="使用公司" width="100"> </el-table-column>
-                        <el-table-column prop="department" label="使用部门" width="100"> </el-table-column>
-                        <el-table-column prop="user_id" label="使用人" width="100"> </el-table-column>
-                        <el-table-column prop="manager_id" label="管理员" width="100"> </el-table-column>
-                        <el-table-column prop="address" label="存放地点" width="100"> </el-table-column>
-                    </el-table>
+                    <!--<el-table :data="selectCollarAssetsData" border style="width: 100%;margin:10px 0;">-->
+                        <!--<el-table-column fixed type="selection" width="55"></el-table-column>-->
+                        <!--<el-table-column prop="bar_code" label="资产条码" width="140"> </el-table-column>-->
+                        <!--<el-table-column prop="name" label="资产名称" width="150"> </el-table-column>-->
+                        <!--<el-table-column prop="type_id" label="资产类型" width="150"> </el-table-column>-->
+                        <!--<el-table-column prop="company" label="使用公司" width="100"> </el-table-column>-->
+                        <!--<el-table-column prop="department" label="使用部门" width="100"> </el-table-column>-->
+                        <!--<el-table-column prop="user_id" label="使用人" width="100"> </el-table-column>-->
+                        <!--<el-table-column prop="manager_id" label="管理员" width="100"> </el-table-column>-->
+                        <!--<el-table-column prop="address" label="存放地点" width="100"> </el-table-column>-->
+                    <!--</el-table>-->
                 </el-form>
                 <!-- 选择领用人 -->
                 <el-dialog title="选择用户" :visible.sync="selectPersonDialogVisible" width="70%" append-to-body>
@@ -171,7 +172,7 @@
                     <el-row>
                         <el-col :span="8">
                             <el-form-item label="维修单号" size="small" style="margin-left: -30px">
-                                <el-input v-model="showRegisterData.pid" placeholder="单号" disabled></el-input>
+                                <el-input v-model="showRegisterData.num" placeholder="单号" disabled></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="8">
@@ -254,7 +255,7 @@
                     <el-row>
                         <el-col :span="8">
                             <el-form-item label="维修单号" size="small" style="margin-left: -30px">
-                                <el-input v-model="editRegisterData.pid" placeholder="单号"></el-input>
+                                <el-input v-model="editRegisterData.num" placeholder="单号" disabled></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="8">
@@ -270,12 +271,12 @@
                         </el-col>
                         <el-col :span="8">
                             <el-form-item label="报修人" size="small">
-                                <el-input v-model="editRegisterData.name" ></el-input>
+                                <el-input v-model="editRegisterData.name" disabled></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="8">
                             <el-form-item label="维修状态" size="small" style="margin-left: -30px">
-                                <el-input v-model="editRegisterData.status" placeholder="已取消" ></el-input>
+                                <el-input v-model="editRegisterData.status" placeholder="已取消" disabled></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="8">
@@ -347,18 +348,51 @@
         props: {
             // msg: String
         },
+        updated(){
+            for(let i=0;i<this.tableData.length;i++)
+            {
+                this.tableData[i]['time1']=this.tableData[i]['time1'].split(' ')[0];
+                this.tableData[i]['time2']=this.tableData[i]['time2'].split(' ')[0]
+
+            }
+
+        },
          methods: {
+            //挂载前将后台数据加载到前台
             find(){
-
             this.$axios.get("/api/maintain").then(res=>{
-
-
-
             this.tableData=res.data.data;
             this.options = res.data.prop;
-
             });
             },
+             Search(){
+                this.tableMi=this.tableData;
+                if(this.sizeForm.date!=undefined) {
+                    let date = this.sizeForm.date;
+                    let LIST = [];
+                    let date1 = new Date(date[0]).toLocaleDateString();
+                    let date2 = new Date(date[1]).toLocaleDateString();
+                    LIST.push(date1);
+                    LIST.push(date2);
+                    for(let i=0;i<this.tableData.length;i++)
+                    {
+                        if(parseInt(this.tableData[i].time2.split('-')[0])>=parseInt(date2.split('/')[0]&parseInt(this.tableData[i].time1.split('-')[0])<=parseInt(date1.split('/')[0])))
+                        {
+                            if(parseInt(this.tableData[i].time2.split('-')[1])>=parseInt(date2.split('/')[1]&parseInt(this.tableData[i].time1.split('-')[1])<=parseInt(date1.split('/')[1]))) {
+                                if(parseInt(this.tableData[i].time2.split('-')[2])>=parseInt(date2.split('/')[2]&parseInt(this.tableData[i].time1.split('-')[2])<=parseInt(date1.split('/')[2]))) {
+                                    this.tableMi2 = this.tableData.splice(i);
+                                    this.tableData='';
+                                    this.tableData=this.tableMi2;
+                                }
+                            }
+                        }
+                    }
+                }
+                else{
+                    this.tableData=this.tableMi;
+                }
+
+             },
             date(){
                 // console.log(this.sizeForm.data)
             },
@@ -434,8 +468,10 @@
 
                  });
 
-                })
+                });
 
+                this.addCollarForm={};
+                    this.addCollarForm['handle_name']='WX'+Date.parse(new Date())
                 });
             },
             handleAvatarSuccess(){
@@ -468,7 +504,8 @@
 
                 this.editRegisterData=row;
 
-                if(true){
+                if(true)
+                {
                     this.$message({
                         type: 'success',
                         message: '编辑成功!'
@@ -494,21 +531,6 @@
             return{
                 //资产选择
                 options: [
-                //   value: '选项1',
-                //   label: '黄金糕'
-                // }, {
-                //   value: '选项2',
-                //   label: '双皮奶'
-                // }, {
-                //   value: '选项3',
-                //   label: '蚵仔煎'
-                // }, {
-                //   value: '选项4',
-                //   label: '龙须面'
-                // }, {
-                //   value: '选项5',
-                //   label: '北京烤鸭'
-                // }
                 ],
                 value: '',
                 property:'',
@@ -526,7 +548,7 @@
                 addCollarDialogVisible:false,
                 selectPersonDialogVisible:false,
                 addCollarForm:{
-                    handle_name:Math.random(20,30),
+                    handle_name:'WX'+Date.parse(new Date()),
                     time:Date.now()
                 },
                 showCollarForm:{},
@@ -539,8 +561,9 @@
                     data:''
                 },
                 tableData: [
-
                 ],
+                tableMi:[],
+                tableMi2:[],
 
             }
         },

@@ -18,5 +18,6 @@ class Main(Base):
     price = Column(DECIMAL)
     people = Column(String)
     time2 = Column(TIMESTAMP)
+    num = Column(String)
 
 
