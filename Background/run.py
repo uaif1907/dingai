@@ -35,11 +35,15 @@ def login():
 
                 # 用户信息保留在 session 会话
                 # 返回 {'code':200,'msg':'yes','token':''}
+
+                return jsonify({'code':200,'msg':'yes','token':str(s.dumps({'id':user.id}))})
+
                 # return jsonify({'code':200,'msg':'yes','token':s.dumps({'id':user.id})})
                 return jsonify({'code': 200, 'msg': 'yes', 'token': token})
 
 
     return jsonify({'code':'300','msg':'no'})
+
 
 
 

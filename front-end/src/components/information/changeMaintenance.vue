@@ -24,20 +24,20 @@
             </el-col>
         </el-row>
         <!--表格-->
-        <el-table :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" border style="width: 100%;margin:10px 0;">
+        <el-table :data="mysqlData.slice((currentPage-1)*pageSize,currentPage*pageSize)" border style="width: 100%;margin:10px 0;">
             <el-table-column fixed type="selection" width="55"></el-table-column>
-            <el-table-column prop="collar_number" label="变更单号" width="160"></el-table-column>
-            <el-table-column prop="collar_time" label="变更时间" width="120"></el-table-column>
-            <el-table-column prop="personnel_name" label="资产名称" width="140"></el-table-column>
-            <el-table-column prop="Supplier" label="供应商" width="140"></el-table-column>
-            <el-table-column prop="company_name" label="联系人" width="140"></el-table-column>
-            <el-table-column prop="phone" label="联系方式" width="140"></el-table-column>
-            <el-table-column prop="maturity" label="维保到期时间" width="120"></el-table-column>
-            <el-table-column prop="department_name" label="资产类型" width="160"></el-table-column>
-            <el-table-column prop="company_name" label="使用人" width="100"></el-table-column>
-            <el-table-column prop="company" label="使用公司" width="100"></el-table-column>
-            <el-table-column prop="company_department" label="使用部门" width="100"></el-table-column>
-            <el-table-column prop="user" label="管理员" width="120"></el-table-column>
+            <el-table-column prop="oid" label="变更单号" width="160"></el-table-column>
+            <el-table-column prop="ctime" label="变更时间" width="160"></el-table-column>
+            <el-table-column prop="name" label="资产名称" width="140"></el-table-column>
+            <el-table-column prop="supplier" label="供应商" width="140"></el-table-column>
+            <el-table-column prop="linkman" label="联系人" width="140"></el-table-column>
+            <el-table-column prop="tel" label="联系方式" width="140"></el-table-column>
+            <el-table-column prop="expir" label="维保到期时间" width="160"></el-table-column>
+            <el-table-column prop="type" label="资产类型" width="160"></el-table-column>
+            <el-table-column prop="linkman" label="使用人" width="100"></el-table-column>
+            <el-table-column prop="companyname" label="使用公司" width="100"></el-table-column>
+            <el-table-column prop="departmentname" label="使用部门" width="100"></el-table-column>
+            <el-table-column prop="username" label="管理员" width="120"></el-table-column>
             <el-table-column fixed="right" label="操作" width="100">
                 <template slot-scope="scope">
                     <el-button @click="handleClickShowCollar(scope.row)" type="text" >查看</el-button>
@@ -65,13 +65,13 @@
                 <el-row>
                     <el-col :span="12">
                         <el-form-item label="变更单号" size="small">
-                            <el-input v-model="addCollarForm.modify_number" disabled></el-input>
+                            <el-input v-model="addCollarForm.oid"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
                         <el-form-item label="处理时间" size="small">
                             <el-date-picker
-                                    v-model="addCollarForm.time"
+                                    v-model="addCollarForm.ctime"
                                     type="date"
                                     format="yyyy 年 MM 月 dd 日"
                                     value-format="timestamp"
@@ -94,23 +94,56 @@
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="供应商" size="small">
-                            <el-input v-model="addCollarForm.specification" placeholder="供应商"></el-input>
+                            <el-input v-model="addCollarForm.supplier" placeholder="供应商"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item label="来源" size="small">
+                            <el-select v-model="addCollarForm.pid" placeholder="来源">
+                                <el-option value="1">优逸客</el-option>
+                                <el-option value="2">优斯特</el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item label="使用公司" size="small">
+                            <el-select v-model="addCollarForm.cid" placeholder="使用公司">
+                                <el-option value="1">阿里</el-option>
+                                <el-option value="2">腾讯</el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item label="使用部门" size="small">
+                            <el-select v-model="addCollarForm.did" placeholder="使用部门">
+                                <el-option value="1">财务部</el-option>
+                                <el-option value="2">人事部</el-option>
+                                <el-option value="2">市场部</el-option>
+                                <el-option value="2">开发部</el-option>
+                            </el-select>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="联系人" size="small">
-                            <el-input v-model="addCollarForm.specification" placeholder="联系人"></el-input>
+                            <el-input v-model="addCollarForm.linkman" placeholder="联系人"></el-input>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="8" class="sn-box">
+                    <el-col :span="8">
                         <el-form-item label="联系方式" size="small">
-                            <el-input v-model="addCollarForm.sn" placeholder="联系方式"></el-input>
+                            <el-input v-model="addCollarForm.tel" placeholder="联系方式"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item label="管理员" size="small">
+                            <el-select v-model="addCollarForm.aid" placeholder="管理员">
+                                <el-option value="1">shangdi</el-option>
+                            </el-select>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="到期时间" size="small">
                             <el-date-picker
-                                    v-model="addCollarForm.time"
+                                    v-model="addCollarForm.expir"
                                     type="date"
                                     format="yyyy 年 MM 月 dd 日"
                                     value-format="timestamp"
@@ -121,7 +154,7 @@
                     </el-col>
                     <el-col :span="24">
                         <el-form-item label="备注">
-                            <el-input type="textarea" v-model="addCollarForm.remarks" placeholder="备注"></el-input>
+                            <el-input type="textarea" v-model="addCollarForm.remark" placeholder="备注"></el-input>
                         </el-form-item>
                     </el-col>
 
@@ -155,18 +188,18 @@
                 <el-row>
                     <el-col :span="12">
                         <el-form-item label="变更单号" size="small">
-                            <el-input v-model="showCollarForm.collar_number" disabled></el-input>
+                            <el-input v-model="showCollarForm.oid" disabled></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
                         <el-form-item label="处理时间" size="small">
                             <el-date-picker
-                                    v-model="showCollarForm.collar_times"
+                                    v-model="showCollarForm.ctime"
                                     type="date"
                                     format="yyyy 年 MM 月 dd 日"
-                                    value-format="timestamp"
                                     style="width:100%;"
-                                    placeholder="选择领用日期">
+                                    placeholder="选择领用日期"
+                            disabled>
                             </el-date-picker>
                         </el-form-item>
                     </el-col>
@@ -177,41 +210,41 @@
                 <el-row>
                     <el-col :span="8">
                         <el-form-item label="资产名称" size="small">
-                            <el-input v-model="showCollarForm.personnel_name" placeholder="资产名称" size="small">
-                                <el-button slot="append" type="primary" icon="el-icon-office-building" @click="selectAssetsDialogVisible=true" size="small"></el-button>
+                            <el-input v-model="showCollarForm.name" placeholder="资产名称" size="small" disabled>
+                                <el-button slot="append" type="primary" icon="el-icon-office-building" @click="selectAssetsDialogVisible=true" size="small" disabled></el-button>
                             </el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="供应商" size="small">
-                            <el-input v-model="showCollarForm.Supplier" placeholder="供应商"></el-input>
+                            <el-input v-model="showCollarForm.supplier" placeholder="供应商" disabled></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="联系人" size="small">
-                            <el-input v-model="showCollarForm.company_name" placeholder="联系人"></el-input>
+                            <el-input v-model="showCollarForm.linkman" placeholder="联系人" disabled></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8" class="sn-box">
                         <el-form-item label="联系方式" size="small">
-                            <el-input v-model="showCollarForm.phone" placeholder="联系方式"></el-input>
+                            <el-input v-model="showCollarForm.tel" placeholder="联系方式" disabled></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="到期时间" size="small">
                             <el-date-picker
-                                    v-model="showCollarForm.times"
+                                    v-model="showCollarForm.expir"
                                     type="date"
                                     format="yyyy 年 MM 月 dd 日"
-                                    value-format="timestamp"
                                     style="width:100%;"
-                                    placeholder="选择日期">
+                                    placeholder="选择日期"
+                            disabled>
                             </el-date-picker>
                         </el-form-item>
                     </el-col>
                     <el-col :span="24">
                         <el-form-item label="备注">
-                            <el-input type="textarea" v-model="showCollarForm.remarks" placeholder="备注"></el-input>
+                            <el-input type="textarea" v-model="showCollarForm.remark" placeholder="备注" disabled></el-input>
                         </el-form-item>
                     </el-col>
 
@@ -231,20 +264,17 @@
     import Selectedassets from '@/components/Withdraw/selectedassets.vue'
     export default {
         name: 'withdraws',
-        props: {
-            // isCollapse:Boolean
-        },
+        props:['mysqlData'],
         data(){
             return{
+                MaintenanceDate:[],
                 total:100,//默认数据总数
                 currentPage:1,//默认开始页面
-                pageSize:10,//每页的数据条数
+                pageSize:5,//每页的数据条数
                 searchDate:[],
                 addCollarDialogVisible:false,
                 selectPersonDialogVisible:false,
-                addCollarForm:{
-                    time:Date.now()
-                },
+                addCollarForm:{'edit':1},
                 showCollarForm:{},
                 showCollarDialogVisible:false,
                 selectAssetsDialogVisible:false,
@@ -308,7 +338,14 @@
             },
             fun1(data){
                 this.addCollarDialogVisible = false;
-                this.tableData.push(data)
+                // this.addCollarForm.push(data)
+                this.$axios.post("/api/changes",data)
+                    .then((response) => {
+                        console.log(response.data)
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    });
             },
             handleAvatarSuccess(){
                 this.imageUrl = URL.createObjectURL(file.raw);
@@ -320,7 +357,7 @@
         components:{
             Selectuser,
             Selectedassets
-        }
+        },
     }
 </script>
 

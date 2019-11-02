@@ -26,9 +26,15 @@
       <p>Copyright ©2018 dingai, All Rights Reserved.</p>
     </div>
 <!--&lt;!&ndash;    退出&ndash;&gt;-->
+<<<<<<< HEAD
     <!--<div class="close">-->
       <!--<i class="el-icon-close"></i>-->
     <!--</div>-->
+=======
+<!--    <div class="close">-->
+<!--      <i class="el-icon-close"></i>-->
+<!--    </div>-->
+>>>>>>> 0c7c023ca24490f6843d791bb5eb418f424aa1bd
   </div>
 </template>
 
@@ -76,9 +82,10 @@ export default {
                       message: '登录成功',
                       type: 'success',
                   });
-                  localStorage.token = rep.data.token;
+                  localStorage.token = rep.data.token
+                  this.$router.push({name:'index'})
 
-                  this.$router.push("index")
+
               }else{
                 this.$message.error('登录失败');
               }

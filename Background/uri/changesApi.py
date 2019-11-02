@@ -4,7 +4,6 @@ from ..database.changetable import Change as ch
 from ..database.db import session
 from flask import request
 from datetime import datetime
-import os
 
 # 获取信息
 change_fields={
@@ -55,7 +54,7 @@ def Mold(type):
         type['type'] = "土地、房屋及构筑物"
     return type
 
-class Change(Resource):
+class Changes(Resource):
     def get(self):
         """
          变更信息
@@ -93,25 +92,20 @@ class Change(Resource):
     # 添加
     def post(self):
         data = request.get_json(silent=True)
-        print(data)
         oid = data['oid'],
+        name = data['name']
         now = datetime.now()
         now = now.strftime("%Y-%m-%d %H:%M:%S")
-        name = data['name']
-        type = data['type']
-        model = data['model']
-        sn = data['sn']
-        unit = data['unit']
-        aid = data['aid']
-        area = data['area']
-        deadline = data['deadline']
+        tel = data['tel']
+        remark = data['remark']
+        supplier = data['supplier']
         linkman = data['linkman']
+        aid = data['aid']
         cid = data['cid']
         did = data['did']
         pid = data['pid']
-        remark = data['remark']
-        res = ch(oid=oid,ctime=now,name=name,type=type,model=model,sn=sn,unit=unit,aid=aid,area=area,deadline=deadline,linkman=linkman,cid=cid,did=did,pid=pid,remark=remark,expir=now)
+        res = ch(oid=oid, ctime=now, name=name, supplier=supplier, linkman=linkman, tel=tel, remark=remark,expir=now,aid=aid,cid=cid,did=did,pid=pid)
         session.add(res)
         session.commit()
-        return {"code":200,"msg":'ok','data':123}
+        return {"code": 200, "msg": 'ok', 'data': 123}
         # pass

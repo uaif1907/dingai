@@ -91,8 +91,8 @@
                     <el-col :span="8">
                         <el-form-item label="资产类型" size="small">
                             <el-select v-model="addCollarForm.type" placeholder="资产类型">
-                                <el-option value="1">我的</el-option>
-                                <el-option value="2">你的</el-option>
+                                <el-option value="1">电气设备</el-option>
+                                <el-option value="2">土地房屋设备</el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
@@ -101,7 +101,7 @@
                             <el-input v-model="addCollarForm.model" placeholder="规格型号"></el-input>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="8" class="sn-box">
+                    <el-col :span="8">
                         <el-form-item label="SN号" size="small">
                             <el-input v-model="addCollarForm.sn" placeholder="SN号"></el-input>
                         </el-form-item>
@@ -114,8 +114,7 @@
                     <el-col :span="8">
                         <el-form-item label="管理员" size="small">
                             <el-select v-model="addCollarForm.aid" placeholder="管理员">
-                                <el-option value="1">我的</el-option>
-                                <el-option value="2">你的</el-option>
+                                <el-option value="1">shangdi</el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
@@ -127,24 +126,26 @@
                     <el-col :span="8">
                         <el-form-item label="使用公司" size="small">
                             <el-select v-model="addCollarForm.cid" placeholder="使用公司">
-                                <el-option value="1">我的</el-option>
-                                <el-option value="2">你的</el-option>
+                                <el-option value="1">阿里</el-option>
+                                <el-option value="2">腾讯</el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="使用部门" size="small">
                             <el-select v-model="addCollarForm.did" placeholder="使用部门">
-                                <el-option value="1">我的</el-option>
-                                <el-option value="2">你的</el-option>
+                                <el-option value="1">财务部</el-option>
+                                <el-option value="2">人事部</el-option>
+                                <el-option value="2">市场部</el-option>
+                                <el-option value="2">开发部</el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="存放地点" size="small">
                             <el-select v-model="addCollarForm.area" placeholder="存放地点">
-                                <el-option value="1">我的</el-option>
-                                <el-option value="2">你的</el-option>
+                                <el-option value="1">南仓库</el-option>
+                                <el-option value="2">北仓库</el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
@@ -156,8 +157,8 @@
                     <el-col :span="8">
                         <el-form-item label="来源" size="small">
                             <el-select v-model="addCollarForm.pid" placeholder="来源">
-                                <el-option value="1">我的</el-option>
-                                <el-option value="2">你的</el-option>
+                                <el-option value="1">优逸客</el-option>
+                                <el-option value="2">优斯特</el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
@@ -309,21 +310,19 @@
 
     export default {
         name: 'withdraws',
-        props: {
-            // isCollapse:Boolean
-        },
+        props:['mysqlData'],
         data(){
             return{
+                // mysqlData:[],
                 dialogImageUrl: '',
                 dialogVisible: false,
-                mysqlData:[],
                 total:100,//默认数据总数
                 currentPage:1,//默认开始页面
                 pageSize:5,//每页的数据条数
                 searchDate:[],
                 addCollarDialogVisible:false,
                 selectPersonDialogVisible:false,
-                addCollarForm:{},
+                addCollarForm:{img:''},
                 showCollarForm:{},
                 showCollarDialogVisible:false,
                 selectAssetsDialogVisible:false,
@@ -467,18 +466,6 @@
         components:{
             Selectuser,
             Selectedassets
-        },
-        mounted() {
-            let that = this;
-            this.$axios.get("/api/change").then(res => res.data).then(function(data){
-                if(data.code == 200){
-                    console.log(data);
-                    console.log(data.data);
-                    that.mysqlData = data.data
-                }
-            }).catch(function (error) {
-                console.log(error)
-            });
         },
     }
 </script>
